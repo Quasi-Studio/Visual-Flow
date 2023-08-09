@@ -1,10 +1,40 @@
+class Line {
+
+    el: SVGLineElement
+
+    startX: number
+    startY: number
+    endX: number
+    endY: number
+
+    constructor() {
+        this.el = document.createElementNS('http://www.w3.org/2000/svg', 'line')
+        svg_el.appendChild(this.el)
+        this.el.setAttribute('stroke-width', '5')
+        this.el.style.position = 'absolute'
+        this.el.setAttribute('stroke', 'black')
+        this.startX = this.startY = this.endX = this.endY = 0
+    }
+
+    render() {
+        this.el.setAttribute('x1', this.startX.toString())
+        this.el.setAttribute('y1', this.startY.toString())
+        this.el.setAttribute('x2', this.endX.toString())
+        this.el.setAttribute('y2', this.endY.toString())
+    }
+}
+
 
 let item_on_hand = false
-let current_object: HTMLDivElement;
+let line_on_hand = false
+let current_object: HTMLDivElement
+let current_line: Line
 let offsetX = 0, offsetY = 0
 let mouseX = 0, mouseY = 0
 
 let div_list: HTMLDivElement[] = []
+let svg_el: SVGSVGElement
+let line_list: Line[] = []
 
 function inject(a: string) {
     console.log(a)
@@ -17,8 +47,16 @@ function inject(a: string) {
     register_toolkit(el)
 
     document.addEventListener('mousemove', mousemoveHandler)
-    document.addEventListener('mouseup', (_: MouseEvent) => { item_on_hand = false })
+    document.addEventListener('mouseup', (_: MouseEvent) => { item_on_hand = line_on_hand = false })
+    document.addEventListener('mousedown', mousedownHandler_line)
 
+    svg_el = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+    svg_el.style.position = 'absolute'
+    svg_el.style.top = '0px'
+    svg_el.style.left = '0px'
+    svg_el.style.height = '10000px'
+    svg_el.style.width = '10000px'
+    el.appendChild(svg_el)
 }
 
 function register_toolkit(el: HTMLDivElement) {
@@ -53,6 +91,8 @@ function add_new_div(el: HTMLDivElement) {
 
 function mousedownHandler(this: HTMLDivElement, ev: MouseEvent){
 
+    console.log('Enter123')
+
     // 当前元素相对父级元素的偏移
     offsetX = this.offsetLeft
     offsetY = this.offsetTop
@@ -70,11 +110,15 @@ function mousedownHandler(this: HTMLDivElement, ev: MouseEvent){
 
 function mousemoveHandler(ev: MouseEvent){
 
-    if(! item_on_hand){
+    if(! item_on_hand && ! line_on_hand) {
+        return
+    }
 
-        
-
-        return;
+    if (line_on_hand) {
+        current_line.endX = ev.clientX
+        current_line.endY = ev.clientY
+        current_line.render()
+        return
     }
 
     // console.log(ev)
@@ -131,6 +175,16 @@ function mousemoveHandler(ev: MouseEvent){
 
     current_object.style.left = offsetX_new + 'px'
     current_object.style.top = offsetY_new + 'px'
+}
+
+function mousedownHandler_line(ev: MouseEvent) {
+    console.log('Enter')
+    let l = new Line()
+    line_list.push(l)
+    current_line = l
+    line_on_hand = true
+    l.startX = l.endX = ev.clientX
+    l.startY = l.endY = ev.clientY
 }
 
 export default inject
