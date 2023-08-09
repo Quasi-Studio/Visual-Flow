@@ -36,8 +36,8 @@ function add_new_div(el: HTMLDivElement) {
     div.style.height = '80px'
     div.style.position = 'absolute'
     div.style.background = '#3366ff'
-    div.style.top = '0px'
-    div.style.left = '0px'
+    div.style.top = '50px'
+    div.style.left = '50px'
     div.addEventListener('mousedown', mousedownHandler)
     div.addEventListener('mousedown', (ev: MouseEvent) => { ev.preventDefault() })
     el.appendChild(div)
@@ -81,6 +81,16 @@ function mousemoveHandler(ev: MouseEvent){
     
     // if (offsetX_new < 100) offsetX_new = 0
     // if (offsetY_new < 100) offsetY_new = 0
+
+    if (offsetX_new < 50) offsetX_new = 50
+    if (offsetX_new > 600) offsetX_new = 600
+    if (offsetY_new < 50) offsetY_new = 50
+    if (offsetY_new > 600) offsetY_new = 600
+
+    if (Math.abs(offsetX_new - 300) < 50 && Math.abs(offsetY_new - 300) < 50) {
+        offsetX_new = 300
+        offsetY_new = 300
+    }
 
     current_object.style.left = offsetX_new + 'px'
     current_object.style.top = offsetY_new + 'px'
