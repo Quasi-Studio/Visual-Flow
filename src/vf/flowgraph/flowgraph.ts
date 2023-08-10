@@ -7,8 +7,6 @@ class FlowGraph extends ElementBase<SVGSVGElement> {
     }
 }
 
-SVGLineElement
-
 export {
     FlowGraph
 }

@@ -8,8 +8,12 @@ class Workspace extends ElementBase<HTMLDivElement> {
 
     constructor (id: string) {
         super(document.getElementById(id) as HTMLDivElement)
+        
         this.toolkit = new ToolKit()
+        this.register(this.toolkit)
+        
         this.flowgraph = new FlowGraph()
+        this.register(this.flowgraph)
     }
 }
 
