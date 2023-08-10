@@ -178,13 +178,13 @@ function mousemoveHandler(ev: MouseEvent){
 }
 
 function mousedownHandler_line(ev: MouseEvent) {
-    console.log('Enter')
     let l = new Line()
     line_list.push(l)
     current_line = l
     line_on_hand = true
     l.startX = l.endX = ev.clientX
     l.startY = l.endY = ev.clientY
+    l.render()
 }
 
 export default inject
