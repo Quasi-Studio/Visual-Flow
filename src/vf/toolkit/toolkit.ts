@@ -19,7 +19,7 @@ class ToolKit extends ElementBase<HTMLDivElement> {
     }
 }
 
-const item = ["123", "456", "567"]
+const item = ["123", "456", "567", "123", "456", "567", "123", "456", "567"]
 
 export {
     ToolKit

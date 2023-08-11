@@ -1,6 +1,7 @@
 import { ElementBase } from './base'
 import { ToolKit } from './toolkit/toolkit'
 import { FlowGraph } from './flowgraph/flowgraph'
+import mdui from "mdui"
 
 class Workspace extends ElementBase<HTMLDivElement> {
     toolkit: ToolKit
@@ -25,6 +26,7 @@ class Workspace extends ElementBase<HTMLDivElement> {
         this.el.classList.add('mdui-container-fluid')
         this.toolkit.el.classList.add('mdui-col-xs-3')
         this.flowgraph.el.classList.add('mdui-col-xs-9')
+        this.flowgraph.el.style.height = '1000px'
     }
 
 }
