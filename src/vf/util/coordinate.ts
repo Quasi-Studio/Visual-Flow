@@ -35,6 +35,10 @@ class Point {
     clone(): Point {
         return new Point(this.x, this.y)
     }
+
+    static distance(a: Point, b: Point): number {
+        return Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y))
+    }
 }
 
 class Area {

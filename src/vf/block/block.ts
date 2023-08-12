@@ -11,6 +11,8 @@ interface BlockShape {
 
 class Block extends ElementBase<SVGSVGElement>{
     shape: BlockShape
+    selected: boolean = false
+
     constructor (_shape: BlockShape) {
         super(document.createElementNS('http://www.w3.org/2000/svg', 'svg'))
         this.shape = _shape
@@ -37,6 +39,7 @@ class Block extends ElementBase<SVGSVGElement>{
             this.register(text)
         }
     }
+
 }
 
 export {

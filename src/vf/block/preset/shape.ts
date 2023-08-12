@@ -54,7 +54,16 @@ class TextBlock implements BlockShape {
     }
 
     socket(): { pos: Point; }[] {
-        return []
+        let size = calculateTextSize(this.text_size, this.text_font, this.text_content)
+        return [{
+            pos: new Point(0, size.height / 2 + 12)
+        }, {
+            pos: new Point(size.width / 2 + 12, 0)
+        }, {
+            pos: new Point(size.width + 24, size.height / 2 + 12)
+        }, {
+            pos: new Point(size.width / 2 + 12, size.height + 24)
+        }]
     }
 }
 
