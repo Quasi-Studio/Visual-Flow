@@ -25,7 +25,6 @@ class SocketHint extends Interactor {
     }
 
     onmousemove(ev: MouseEvent) {
-        // console.log(ev.offsetX, ev.offsetY)
         let mouse = new Point(ev.offsetX, ev.offsetY)
         let owner: Block | undefined = undefined
         let min_dis: number = Number.MAX_VALUE
@@ -34,10 +33,8 @@ class SocketHint extends Interactor {
             let socket = blk.shape.socket()
             for (let soc of socket) {
                 // let socket_pos = new Point(soc.pos.x + blk.el.clientLeft, soc.pos.y + blk.el.clientTop)
-                let socket_pos = new Point(soc.pos.x + 100 - 5, soc.pos.y + 200 - 5)
-                // console.log(socket_pos, '111')
-                // console.log(mouse, '222')
-                // console.log(Point.distance(socket_pos, mouse), '333')
+                let socket_pos = new Point(soc.pos.x + 100 - 5, soc.pos.y + 200 - 5) // i do not want to use but i have to test
+
                 if (Point.distance(socket_pos, mouse) < min_dis) {
                     min_dis = Point.distance(socket_pos, mouse)
                     min_pos = socket_pos
@@ -51,8 +48,6 @@ class SocketHint extends Interactor {
         } else {
             this.el.setAttribute('visibility', 'hidden')
         }
-        console.log(min_dis, min_pos, owner)
-        console.log(this.el.getAttribute('x'), this.el.getAttribute('y'))
     }
 }
 
