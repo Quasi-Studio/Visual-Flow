@@ -10,8 +10,8 @@ class Color {
     }
 
     hex(): string {
-        let s = "00000" + (this.r << 8 + this.g << 4 + this.b).toString(16)
-        return s.substring(s.length - 6)
+        let s = "00000" + ((this.r << 16) + (this.g << 8) + this.b).toString(16)
+        return '#' + s.substring(s.length - 6)
     }
 }
 
@@ -27,7 +27,7 @@ class Tricolor {
     }
 }
 
-const TriColorPreset: { [k: string]: Tricolor } = {
+const TricolorPreset: { [k: string]: Tricolor } = {
     blue: new Tricolor(
         new Color(0x4c, 0x97, 0xff),
         new Color(0x42, 0x80, 0xd7),
@@ -81,12 +81,13 @@ const TriColorPreset: { [k: string]: Tricolor } = {
 }
 
 const ColorPreset: { [k: string]: Color } = {
-    text: new Color(0x57, 0x5e, 0x75)
+    text_dark: new Color(0x57, 0x5e, 0x75),
+    text_light: new Color(0xee, 0xee, 0xee)
 }
 
 export {
     Color,
     Tricolor,
     ColorPreset,
-    TriColorPreset
+    TricolorPreset
 }
