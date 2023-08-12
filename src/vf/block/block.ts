@@ -5,7 +5,7 @@ import { Color, Tricolor } from "./color";
 interface BlockShape {
     // 其中的 pos 都是相对于 block 左上角的 offset
     path(): { path: string, color: Tricolor }
-    text(): { text: string, pos: Point, color: Color, size: number }[]
+    text(): { text: string, pos: Point, color: Color, size: number, font: string }[]
     socket(): { pos: Point }[]
 }
 
@@ -31,7 +31,7 @@ class Block extends ElementBase<SVGSVGElement>{
             let text = document.createElementNS('http://www.w3.org/2000/svg', 'text')
             i.pos.apply(text, 'left-top')
             text.textContent = i.text
-            text.setAttribute('font-family', 'Consolas')
+            text.setAttribute('font-family', i.font)
             text.setAttribute('font-size', i.size + 'px')
             text.setAttribute('fill', i.color.hex())
             this.register(text)
