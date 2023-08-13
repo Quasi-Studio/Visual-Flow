@@ -18,10 +18,10 @@ class Block extends ElementBase<SVGSVGElement>{
         this.shape = _shape
         this.el.setAttribute('x', '100px')
         this.el.setAttribute('y', '200px')
-        this.render()
+        this.init()
     }
     
-    render(): void {
+    init(): void {
         let path_el = document.createElementNS('http://www.w3.org/2000/svg', 'path')
         let path = this.shape.path()
         path_el.setAttribute('d', path.path)
@@ -38,6 +38,14 @@ class Block extends ElementBase<SVGSVGElement>{
             text.setAttribute('fill', i.color.hex())
             this.register(text)
         }
+    }
+
+    rerender() {
+        let path_el = this.el.querySelector('path')
+        if (this.selected)
+            path_el!.setAttribute('fill', this.shape.path().color.tertiary.hex())
+        else
+            path_el!.setAttribute('fill', this.shape.path().color.primary.hex())
     }
 
 }

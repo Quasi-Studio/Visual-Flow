@@ -11,7 +11,7 @@ function intersect(el: SVGSVGElement, p: Point): boolean {
         svg_point.x = p.x - 100
         svg_point.y = p.y - 200
 
-        if (child_el.isPointInFill(svg_point))
+        if (child_el.isPointInFill(svg_point) || child_el.isPointInStroke(svg_point))
             return true
     }
     return false

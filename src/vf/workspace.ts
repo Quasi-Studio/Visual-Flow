@@ -1,6 +1,7 @@
 import { ElementBase } from './base'
 import { ToolKit } from './toolkit/toolkit'
 import { FlowGraph } from './flowgraph/flowgraph'
+import BlockPreset from './block/preset/shape'
 import mdui from "mdui"
 
 class Workspace extends ElementBase<HTMLDivElement> {
@@ -16,6 +17,8 @@ class Workspace extends ElementBase<HTMLDivElement> {
         this.flowgraph = new FlowGraph()
         this.register(this.flowgraph)
 
+        this.flowgraph.create_block(new BlockPreset.text('jellyfish', { font: 'Consolas', text_size: 30 }))
+        
         this.layout()
 
         this.toolkit.initialize()
