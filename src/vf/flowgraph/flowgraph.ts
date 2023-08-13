@@ -21,6 +21,7 @@ class FlowGraph extends ElementBase<SVGSVGElement> {
         this.block_pool.add_block(b)
         let drag = this.interact.Drag as Drag
         b.el.addEventListener('mousedown', (ev) => drag.onmousedown(b, ev))
+        b.el.addEventListener('mouseup', (ev) => drag.onmouseup(b, ev))
         return b
     }
 }

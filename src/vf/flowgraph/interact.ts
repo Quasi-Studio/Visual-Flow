@@ -54,6 +54,7 @@ class SocketHint extends Interactor {
 
 class Drag extends Interactor {
     mouse_start: Point
+    dragging = false
 
     constructor (par: FlowGraph) {
         super(par)
@@ -61,18 +62,29 @@ class Drag extends Interactor {
     }
 
     onmousedown(blk: Block, ev: MouseEvent): void {
-        let mouse = new Point(ev.offsetX, ev.offsetY)
+        let mouse = new Point(ev.clientX, ev.clientY)
+        this.mouse_start = mouse
+        console.log('down', mouse)
         if (! blk.selected) {
             blk.selected = true
             blk.rerender()
+            this.dragging = false
             return
+        } else {
+            this.dragging = true
         }
-        this.mouse_start = mouse
     }
     onmousemove(ev: MouseEvent): void {
 
     }
-    onmouseup(ev: MouseEvent): void {
+    onmouseup(blk: Block, ev: MouseEvent): void {
+        console.log('up', ev.clientX, ev.clientY)
+        if (ev.clientX == this.mouse_start.x && ev.clientY == this.mouse_start.y && this.dragging) {
+            blk.selected = false
+            blk.rerender()
+            this.dragging = false
+            return
+        }
 
     }
 }
