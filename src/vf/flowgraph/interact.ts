@@ -1,5 +1,6 @@
 import { Block } from "../block/block";
 import { Point } from "../util/coordinate";
+import { intersect } from "../util/intersect";
 import { FlowGraph } from "./flowgraph";
 
 abstract class Interactor {
@@ -24,7 +25,7 @@ class SocketHint extends Interactor {
         par.el.addEventListener('mousemove', this.onmousemove.bind(this))
     }
 
-    onmousemove(ev: MouseEvent) {
+    onmousemove(ev: MouseEvent): void {
         let mouse = new Point(ev.offsetX, ev.offsetY)
         let owner: Block | undefined = undefined
         let min_dis: number = Number.MAX_VALUE
@@ -51,6 +52,34 @@ class SocketHint extends Interactor {
     }
 }
 
+class Drag extends Interactor {
+    constructor (par: FlowGraph) {
+        super(par)
+        par.el.addEventListener('mousedown', this.onmousedown.bind(this))
+        par.el.addEventListener('mousemove', this.onmousemove.bind(this))
+        par.el.addEventListener('mouseup', this.onmouseup.bind(this))
+    }
+
+    onmousedown(ev: MouseEvent): void {
+        let mouse = new Point(ev.offsetX, ev.offsetY)
+        let hit = false
+        for (let i of this.par.block_pool.blocks) {
+            if (intersect(i.el, mouse)) {
+                hit = true
+                break
+            }
+        }
+        console.log(hit)
+    }
+    onmousemove(ev: MouseEvent): void {
+
+    }
+    onmouseup(ev: MouseEvent): void {
+
+    }
+}
+
 export {
-    SocketHint
+    SocketHint,
+    Drag
 }
