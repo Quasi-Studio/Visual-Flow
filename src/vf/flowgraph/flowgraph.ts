@@ -13,6 +13,9 @@ class FlowGraph extends ElementBase<SVGSVGElement> {
         this.interact.SocketHint = new SocketHint(this)
         this.interact.Drag = new Drag(this)
         this.block_pool = new BlockPool(this.el)
+
+        this.el.setAttribute('width', '100%')
+        this.el.setAttribute('height', '1000px')
     }
 
     create_block(shape: BlockShape): Block {
