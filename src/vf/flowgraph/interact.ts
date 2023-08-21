@@ -26,6 +26,7 @@ class SocketHint extends Interactor {
     }
 
     onmousemove(ev: MouseEvent): void {
+        ev.preventDefault()
         let mouse = new Point(ev.offsetX, ev.offsetY)
         let owner: Block | undefined = undefined
         let min_dis: number = Number.MAX_VALUE
@@ -62,6 +63,7 @@ class Drag extends Interactor {
     }
 
     onmousedown(blk: Block, ev: MouseEvent): void {
+        ev.preventDefault()
         let mouse = new Point(ev.clientX, ev.clientY)
         this.mouse_start = mouse
         console.log('down', mouse)
@@ -76,8 +78,10 @@ class Drag extends Interactor {
     }
     onmousemove(ev: MouseEvent): void {
 
+        ev.preventDefault()
     }
     onmouseup(blk: Block, ev: MouseEvent): void {
+        ev.preventDefault()
         console.log('up', ev.clientX, ev.clientY)
         if (ev.clientX == this.mouse_start.x && ev.clientY == this.mouse_start.y && this.dragging) {
             blk.selected = false
