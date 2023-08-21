@@ -1,6 +1,6 @@
-import { ElementBase } from "../base";
-import { Point } from "../util/coordinate";
-import { Color, Tricolor } from "./color";
+import { appendChild } from "../util/appendChild"
+import { Point } from "../util/coordinate"
+import { Color, Tricolor } from "./color"
 
 interface BlockShape {
     // 其中的 pos 都是相对于 block 左上角的 offset
@@ -9,15 +9,16 @@ interface BlockShape {
     socket(): { pos: Point }[]
 }
 
-class Block extends ElementBase<SVGSVGElement>{
+class Block {
+    el: SVGSVGElement
     shape: BlockShape
     selected: boolean = false
 
     constructor (_shape: BlockShape) {
-        super(document.createElementNS('http://www.w3.org/2000/svg', 'svg'))
-        this.shape = _shape
+        this.el = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
         this.el.setAttribute('x', '100px')
         this.el.setAttribute('y', '200px')
+        this.shape = _shape
         this.init()
     }
     
@@ -28,7 +29,7 @@ class Block extends ElementBase<SVGSVGElement>{
         path_el.setAttribute('fill', path.color.primary.hex())
         // path_el.setAttribute('stroke', path.color.secondary.hex())
         // path_el.setAttribute('stroke-width', '2px')
-        this.register(path_el)
+        appendChild(this, path_el)
         for (let i of this.shape.text()) {
             let text = document.createElementNS('http://www.w3.org/2000/svg', 'text')
             i.pos.apply(text, 'left-top')
@@ -36,17 +37,11 @@ class Block extends ElementBase<SVGSVGElement>{
             text.setAttribute('font-family', i.font)
             text.setAttribute('font-size', i.size + 'px')
             text.setAttribute('fill', i.color.hex())
-            this.register(text)
+            appendChild(this, text)
         }
     }
 
-    rerender() {
-        let path_el = this.el.querySelector('path')
-        if (this.selected)
-            path_el!.setAttribute('fill', this.shape.path().color.tertiary.hex())
-        else
-            path_el!.setAttribute('fill', this.shape.path().color.primary.hex())
-    }
+    // update(option: )
 
 }
 

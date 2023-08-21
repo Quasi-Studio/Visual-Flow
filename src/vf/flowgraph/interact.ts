@@ -1,7 +1,7 @@
-import { Block } from "../block/block";
-import { Point } from "../util/coordinate";
-import { intersect } from "../util/intersect";
-import { FlowGraph } from "./flowgraph";
+import { Block } from "../block/block"
+import { appendChild } from "../util/appendChild"
+import { Point } from "../util/coordinate"
+import { FlowGraph } from "./flowgraph"
 
 abstract class Interactor {
     par: FlowGraph
@@ -21,7 +21,7 @@ class SocketHint extends Interactor {
         path.setAttribute('fill', '#000000')
         this.el.appendChild(path)
         this.el.setAttribute('visibility', 'hidden')
-        par.register(this.el)
+        appendChild(par, this)
         par.el.addEventListener('mousemove', this.onmousemove.bind(this))
     }
 
@@ -67,7 +67,7 @@ class Drag extends Interactor {
         console.log('down', mouse)
         if (! blk.selected) {
             blk.selected = true
-            blk.rerender()
+            // blk.rerender()
             this.dragging = false
             return
         } else {
@@ -81,7 +81,7 @@ class Drag extends Interactor {
         console.log('up', ev.clientX, ev.clientY)
         if (ev.clientX == this.mouse_start.x && ev.clientY == this.mouse_start.y && this.dragging) {
             blk.selected = false
-            blk.rerender()
+            // blk.rerender()
             this.dragging = false
             return
         }
