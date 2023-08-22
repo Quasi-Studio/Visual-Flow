@@ -2,7 +2,9 @@ type Patch = {
     [key: string]: any
 }
 
-type PluginConfig = (p: Patch) => string[]
+interface PluginConfig {
+    update(p: Patch): string[]
+}
 
 interface BaseConfig {
     plugins?: {
@@ -16,11 +18,16 @@ interface BaseConfig {
 abstract class ElementBase<T extends BaseConfig> {
 
     abstract el: HTMLElement | SVGElement
-    constructor(public val: T) {}
+    constructor(protected val: T) {}
 
-    abstract init(a: HTMLElement | SVGElement): void
+    abstract init(par_el: HTMLElement | SVGElement): void
 
-    abstract update(a: string[]): void
+    update_batch(a: string[]): void {
+        for (let i of a)
+            this.update(i)
+    }
+
+    abstract update(key: string): void
 
     patch(p: { [key: string]: any }) {
         let updateOption: string[] = []
@@ -30,9 +37,9 @@ abstract class ElementBase<T extends BaseConfig> {
                 updateOption.push(key)
             }
             if (this.val.plugins && this.val.plugins.hasOwnProperty(key)) {
-                updateOption = [...this.val.plugins[key](p[key]), ...updateOption]
+                updateOption = [...this.val.plugins[key].update(p[key]), ...updateOption]
             }
         }
-        this.update(updateOption)
+        this.update_batch(updateOption)
     }
 }
