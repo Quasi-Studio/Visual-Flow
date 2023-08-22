@@ -7,11 +7,16 @@ interface BlockShape {
     path(): { path: string, color: Tricolor }
     text(): { text: string, pos: Point, color: Color, size: number, font: string }[]
     socket(): { pos: Point }[]
+    updater(p: Patch): string[]
 }
 
 class Block extends ElementBase<{
-    selected: boolean,
-    shape: BlockShape
+    plugins: {
+        shape: PluginConfig
+    }
+    fields: {
+        selected: boolean
+    }
 }> {
     el: SVGSVGElement = undefined as any
     path_el: SVGPathElement = undefined as any
@@ -19,8 +24,12 @@ class Block extends ElementBase<{
 
     constructor (shape: BlockShape) {
         super({
-            selected: false,
-            shape
+            plugins: {
+                shape: shape.updater
+            },
+            fields: {
+                selected: false
+            }
         })
     }
     
