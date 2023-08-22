@@ -9,28 +9,34 @@ interface BlockShape {
     socket(): { pos: Point }[]
 }
 
-class Block {
-    el: SVGSVGElement
+class Block extends ElementBase<{
+    selected: boolean,
     shape: BlockShape
-    selected: boolean = false
+}> {
+    el: SVGSVGElement = undefined as any
+    path_el: SVGPathElement = undefined as any
+    text_el: SVGTextElement[] = []
 
-    constructor (_shape: BlockShape) {
-        this.el = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
-        this.el.setAttribute('x', '100px')
-        this.el.setAttribute('y', '200px')
-        this.shape = _shape
-        this.init()
+    constructor (shape: BlockShape) {
+        super({
+            selected: false,
+            shape
+        })
     }
     
     init(): void {
-        let path_el = document.createElementNS('http://www.w3.org/2000/svg', 'path')
-        let path = this.shape.path()
-        path_el.setAttribute('d', path.path)
-        path_el.setAttribute('fill', path.color.primary.hex())
-        // path_el.setAttribute('stroke', path.color.secondary.hex())
-        // path_el.setAttribute('stroke-width', '2px')
-        appendChild(this, path_el)
-        for (let i of this.shape.text()) {
+        this.el = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+        this.el.setAttribute('x', '100px')
+        this.el.setAttribute('y', '200px')
+
+        this.path_el = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+
+        let path = this.val.shape.path()
+        this.path_el.setAttribute('d', path.path)
+        this.path_el.setAttribute('fill', path.color.primary.hex())
+        appendChild(this, this.path_el)
+
+        for (let i of this.val.shape.text()) {
             let text = document.createElementNS('http://www.w3.org/2000/svg', 'text')
             i.pos.apply(text, 'left-top')
             text.textContent = i.text
@@ -38,6 +44,7 @@ class Block {
             text.setAttribute('font-size', i.size + 'px')
             text.setAttribute('fill', i.color.hex())
             appendChild(this, text)
+            this.text_el.push(text)
         }
     }
 
