@@ -79,6 +79,8 @@ class Block extends ElementBase<{
         
         if (a === 'shape.color') {
             this.path_el.setAttribute('fill', this.val.plugins.shape.color.primary.hex())
+            // this.path_el.setAttribute('stroke', this.val.plugins.shape.color.tertiary.hex())
+            // this.path_el.setAttribute('stroke-width', '2px')
         }
 
         if (a === 'shape.text') {

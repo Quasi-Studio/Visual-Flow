@@ -24,7 +24,7 @@ class FlowGraph {
         let drag = this.interact.Drag as Drag
         b.el.addEventListener('mousedown', (ev) => drag.onmousedown(b, ev))
         b.el.addEventListener('mouseup', (ev) => drag.onmouseup(b, ev))
-
+        b.el.addEventListener('mousemove', (ev) => drag.onmousemove(ev))
         // setInterval(() => {
         //     b.patch({
         //         shape: {

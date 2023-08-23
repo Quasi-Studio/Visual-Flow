@@ -75,7 +75,21 @@ class Drag extends Interactor {
         }
     }
     onmousemove(ev: MouseEvent): void {
-
+        // console.log('moveing', ev)
+        
+        console.log(this.dragging)
+        if (this.dragging) {
+            for (let blk of this.par.block_pool.blocks)
+                if (blk.val.fields.selected)
+                    blk.patch({
+                        position: new Point(
+                            blk.val.fields.position.x + (ev.clientX - this.mouse_start.x),
+                            blk.val.fields.position.y + (ev.clientY - this.mouse_start.y)
+                        )
+                    })
+            this.mouse_start = new Point(ev.clientX, ev.clientY)
+            console.log('moving')
+        }
         ev.preventDefault()
     }
     onmouseup(blk: Block, ev: MouseEvent): void {
