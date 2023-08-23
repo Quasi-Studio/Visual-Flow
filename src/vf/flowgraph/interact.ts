@@ -34,8 +34,7 @@ class SocketHint extends Interactor {
         for (let blk of this.par.block_pool.blocks) {
             let socket = blk.val.plugins.shape.socket
             for (let soc of socket) {
-                // let socket_pos = new Point(soc.pos.x + blk.el.clientLeft, soc.pos.y + blk.el.clientTop)
-                let socket_pos = new Point(soc.pos.x + 100 - 5, soc.pos.y + 200 - 5) // i do not want to use but i have to test
+                let socket_pos = new Point(soc.pos.x + blk.val.fields.position.x - 5, soc.pos.y + blk.val.fields.position.y - 5)
 
                 if (Point.distance(socket_pos, mouse) < min_dis) {
                     min_dis = Point.distance(socket_pos, mouse)
@@ -44,7 +43,7 @@ class SocketHint extends Interactor {
                 }
             }
         }
-        if (owner && min_dis < 50) {
+        if (owner && min_dis < 20) {
             min_pos!.apply(this.el, 'left-top')
             this.el.setAttribute('visibility', 'visible')
         } else {
@@ -80,6 +79,7 @@ class Drag extends Interactor {
         ev.preventDefault()
     }
     onmouseup(blk: Block, ev: MouseEvent): void {
+        this.par.block_pool.lift_block(blk)
         ev.preventDefault()
         console.log('up', ev.clientX, ev.clientY)
         if (ev.clientX == this.mouse_start.x && ev.clientY == this.mouse_start.y && this.dragging) {
