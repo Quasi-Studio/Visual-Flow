@@ -15,6 +15,10 @@ class FlowGraph {
 
         this.el.setAttribute('width', '100%')
         this.el.setAttribute('height', '1000px')
+        this.el.addEventListener('click', (_) => {
+            for (let blk of this.block_pool.blocks)
+                blk.patch({ selected: false })
+        })
     }
 
     create_block(shape: BlockShape): Block {
