@@ -32,7 +32,7 @@ class SocketHint extends Interactor {
         let min_dis: number = Number.MAX_VALUE
         let min_pos: Point | undefined = undefined
         for (let blk of this.par.block_pool.blocks) {
-            let socket = blk.shape.socket()
+            let socket = blk.val.plugins.shape.socket
             for (let soc of socket) {
                 // let socket_pos = new Point(soc.pos.x + blk.el.clientLeft, soc.pos.y + blk.el.clientTop)
                 let socket_pos = new Point(soc.pos.x + 100 - 5, soc.pos.y + 200 - 5) // i do not want to use but i have to test
@@ -67,9 +67,8 @@ class Drag extends Interactor {
         let mouse = new Point(ev.clientX, ev.clientY)
         this.mouse_start = mouse
         console.log('down', mouse)
-        if (! blk.selected) {
-            blk.selected = true
-            // blk.rerender()
+        if (! blk.val.fields.selected) {
+            blk.patch({ selected: true })
             this.dragging = false
             return
         } else {
@@ -84,7 +83,7 @@ class Drag extends Interactor {
         ev.preventDefault()
         console.log('up', ev.clientX, ev.clientY)
         if (ev.clientX == this.mouse_start.x && ev.clientY == this.mouse_start.y && this.dragging) {
-            blk.selected = false
+            blk.patch({ selected: false })
             // blk.rerender()
             this.dragging = false
             return

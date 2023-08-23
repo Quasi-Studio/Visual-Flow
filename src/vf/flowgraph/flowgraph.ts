@@ -25,13 +25,13 @@ class FlowGraph {
         b.el.addEventListener('mousedown', (ev) => drag.onmousedown(b, ev))
         b.el.addEventListener('mouseup', (ev) => drag.onmouseup(b, ev))
 
-        setInterval(() => {
-            b.patch({
-                shape: {
-                    text: b.val.plugins.shape.text[0].text + '!'
-                }
-            })
-        }, 1000)
+        // setInterval(() => {
+        //     b.patch({
+        //         shape: {
+        //             text: b.val.plugins.shape.text[0].text + '!'
+        //         }
+        //     })
+        // }, 1000)
         
         return b
     }

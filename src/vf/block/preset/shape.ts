@@ -22,7 +22,7 @@ class TextBlock extends BlockShape {
     text_color: Color
     text_size: number
     text_font: string
-    color: Tricolor
+    block_color: Tricolor
 
     constructor (content: string, option?: TextBlockCreateOption) {
         super()
@@ -31,17 +31,18 @@ class TextBlock extends BlockShape {
         let opt = {...TextBlockDefaultOption, ...option}
         this.text_color = opt.text_color!
         this.text_size = opt.text_size!
-        this.color = opt.color!
+        this.block_color = opt.color!
         this.text_font = opt.font!
     }
 
-    get path(): { path: string, color: Tricolor } {
+    get color(): Tricolor {
+        return this.block_color
+    }
+
+    get path(): string {
         let size = calculateTextSize(this.text_size, this.text_font, this.text_content)
         console.log(size)
-        return {
-            path: `m 0 12 v ${size.height} c 0 9 3 12 12 12 h ${size.width} c 9 0 12 -3 12 -12 v -${size.height} c 0 -9 -3 -12 -12 -12 h -${size.width} c -9 0 -12 3 -12 12`,
-            color: this.color
-        }
+        return `m 0 12 v ${size.height} c 0 9 3 12 12 12 h ${size.width} c 9 0 12 -3 12 -12 v -${size.height} c 0 -9 -3 -12 -12 -12 h -${size.width} c -9 0 -12 3 -12 12`
     }
 
     get text(): { text: string; pos: Point; color: Color; size: number; font: string }[] {

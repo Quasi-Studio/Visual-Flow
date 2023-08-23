@@ -41,21 +41,6 @@ class Point {
     }
 }
 
-class Area {
-    left_top: Point
-    size: Point
-    constructor (_left_top: Point, _size: Point) {
-        this.left_top = _left_top.clone()
-        this.size = _size.clone()
-    }
-
-    apply(el: SVGSVGElement | HTMLDivElement): void {
-        this.size.apply(el, 'size')
-        this.left_top.apply(el, 'left-top')
-    }
-}
-
 export {
-    Point,
-    Area
+    Point
 }
