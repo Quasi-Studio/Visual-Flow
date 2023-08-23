@@ -17,7 +17,7 @@ const TextBlockDefaultOption: TextBlockCreateOption = {
     font: 'Consolas'
 }
 
-class TextBlock implements BlockShape {
+class TextBlock extends BlockShape {
     text_content: string
     text_color: Color
     text_size: number
@@ -25,6 +25,8 @@ class TextBlock implements BlockShape {
     color: Tricolor
 
     constructor (content: string, option?: TextBlockCreateOption) {
+        super()
+
         this.text_content = content
         let opt = {...TextBlockDefaultOption, ...option}
         this.text_color = opt.text_color!
@@ -33,7 +35,7 @@ class TextBlock implements BlockShape {
         this.text_font = opt.font!
     }
 
-    path(): { path: string, color: Tricolor } {
+    get path(): { path: string, color: Tricolor } {
         let size = calculateTextSize(this.text_size, this.text_font, this.text_content)
         console.log(size)
         return {
@@ -42,7 +44,7 @@ class TextBlock implements BlockShape {
         }
     }
 
-    text(): { text: string; pos: Point; color: Color; size: number; font: string }[] {
+    get text(): { text: string; pos: Point; color: Color; size: number; font: string }[] {
         let size = calculateTextSize(this.text_size, this.text_font, this.text_content)
         return [{
             text: this.text_content,
@@ -53,7 +55,7 @@ class TextBlock implements BlockShape {
         }]
     }
 
-    socket(): { pos: Point; }[] {
+    get socket(): { pos: Point; }[] {
         let size = calculateTextSize(this.text_size, this.text_font, this.text_content)
         return [{
             pos: new Point(0, size.height / 2 + 12)
@@ -64,6 +66,14 @@ class TextBlock implements BlockShape {
         }, {
             pos: new Point(size.width / 2 + 12, size.height + 24)
         }]
+    }
+
+    update(key: string, val: any): string[] {
+        if (key === 'text') {
+            this.text_content = val as string
+            return ['shape.text', 'shape.path']
+        }
+        return []
     }
 }
 

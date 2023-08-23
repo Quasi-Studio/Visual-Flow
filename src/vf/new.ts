@@ -4,7 +4,9 @@ import mdui from "mdui"
 
 function inject(id: string): void {
     let flowgraph = new FlowGraph()
-    flowgraph.create_block(new BlockPreset.text('jellyfish', { font: 'Consolas', text_size: 30 }))
+
+    let block = new BlockPreset.text('jellyfish', { font: 'Consolas', text_size: 30 })
+    flowgraph.create_block(block)
 
     document.getElementById(id)!.appendChild(flowgraph.el)
 

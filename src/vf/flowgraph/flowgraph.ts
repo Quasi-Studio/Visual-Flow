@@ -1,8 +1,6 @@
 import { Block, BlockShape } from "../block/block"
 import { Drag, Interactor, SocketHint } from "./interact"
 import { BlockPool } from "./block_pool"
-import { appendChild } from "../util/appendChild"
-
 
 class FlowGraph {
     el: SVGSVGElement
@@ -21,11 +19,20 @@ class FlowGraph {
 
     create_block(shape: BlockShape): Block {
         let b = new Block(shape)
-        appendChild(this, b)
+        b.init(this.el)
         this.block_pool.add_block(b)
         let drag = this.interact.Drag as Drag
         b.el.addEventListener('mousedown', (ev) => drag.onmousedown(b, ev))
         b.el.addEventListener('mouseup', (ev) => drag.onmouseup(b, ev))
+
+        setInterval(() => {
+            b.patch({
+                shape: {
+                    text: b.val.plugins.shape.text[0].text + '!'
+                }
+            })
+        }, 1000)
+        
         return b
     }
 }

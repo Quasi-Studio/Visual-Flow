@@ -1,12 +1,13 @@
+import { ElementBase, PluginConfig } from "../element-base"
 import { appendChild } from "../util/appendChild"
 import { Point } from "../util/coordinate"
 import { Color, Tricolor } from "./color"
 
-interface BlockShape extends PluginConfig {
+abstract class BlockShape extends PluginConfig {
     // 其中的 pos 都是相对于 block 左上角的 offset
-    get path(): { path: string, color: Tricolor }
-    get text(): { text: string, pos: Point, color: Color, size: number, font: string }[]
-    get socket(): { pos: Point }[]
+    abstract get path(): { path: string, color: Tricolor }
+    abstract get text(): { text: string, pos: Point, color: Color, size: number, font: string }[]
+    abstract get socket(): { pos: Point }[]
 
 }
 
@@ -60,9 +61,22 @@ class Block extends ElementBase<{
         }
     }
 
-    // update(a: string): void {
-    //     if ()
-    // }
+    update(a: string): void {
+        if (a === 'selected') {
+            if (this.val.fields.selected)
+                this.path_el.setAttribute('fill', this.val.plugins.shape.path.color.secondary.hex())
+            else
+                this.path_el.setAttribute('fill', this.val.plugins.shape.path.color.primary.hex())
+        }
+
+        if (a === 'shape.path') {
+            this.path_el.setAttribute('d', this.val.plugins.shape.path.path)
+        }
+
+        if (a === 'shape.text') {
+            this.text_el[0].textContent = this.val.plugins.shape.text[0].text
+        }
+    }
 
 }
 
@@ -70,6 +84,6 @@ export {
     Block
 }
 
-export type {
+export {
     BlockShape
 }

@@ -2,8 +2,19 @@ type Patch = {
     [key: string]: any
 }
 
-interface PluginConfig {
-    update(p: Patch): string[]
+abstract class PluginConfig {
+
+    update_batch(p: Patch): string[] {
+        let ret = new Set<string>()
+        for (let key in p) {
+            let val = this.update(key, p[key])
+            for (let u of val)
+                ret.add(u)
+        }
+        return [...ret]
+    }
+
+    abstract update(key: string, val: any): string[]
 }
 
 interface BaseConfig {
@@ -18,7 +29,7 @@ interface BaseConfig {
 abstract class ElementBase<T extends BaseConfig> {
 
     abstract el: HTMLElement | SVGElement
-    constructor(protected val: T) {}
+    constructor(public val: T) {}
 
     abstract init(par_el: HTMLElement | SVGElement): void
 
@@ -37,9 +48,19 @@ abstract class ElementBase<T extends BaseConfig> {
                 updateOption.push(key)
             }
             if (this.val.plugins && this.val.plugins.hasOwnProperty(key)) {
-                updateOption = [...this.val.plugins[key].update(p[key]), ...updateOption]
+                updateOption = [...this.val.plugins[key].update_batch(p[key]), ...updateOption]
             }
         }
         this.update_batch(updateOption)
     }
+}
+
+export type {
+    Patch,
+    BaseConfig
+}
+
+export {
+    PluginConfig,
+    ElementBase
 }
