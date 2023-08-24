@@ -1,7 +1,9 @@
-import { Point } from "../../util/coordinate";
-import { BlockShape } from "../block";
-import { Color, ColorPreset, TricolorPreset, Tricolor } from "../color";
-import calculateTextSize from '../../util/font'
+import { Point } from "../type/point"
+import { BlockShape, Socket } from "../type/block"
+import { Color, Tricolor } from "../type/color"
+import { ColorPreset, TricolorPreset } from "./color"
+import calculateTextSize from '../util/font'
+import { Block } from "../block/block"
 
 interface TextBlockCreateOption {
     text_color?: Color
@@ -56,16 +58,24 @@ class TextBlock extends BlockShape {
         }]
     }
 
-    get socket(): { pos: Point; }[] {
+    socket(owner: Block): Socket[] {
         let size = calculateTextSize(this.text_size, this.text_font, this.text_content)
         return [{
-            pos: new Point(0, size.height / 2 + 12)
+            owner,
+            pos: new Point(0, size.height / 2 + 12),
+            id: 'left'
         }, {
-            pos: new Point(size.width / 2 + 12, 0)
+            owner,
+            pos: new Point(size.width / 2 + 12, 0),
+            id: 'top'
         }, {
-            pos: new Point(size.width + 24, size.height / 2 + 12)
+            owner,
+            pos: new Point(size.width + 24, size.height / 2 + 12),
+            id: 'right'
         }, {
-            pos: new Point(size.width / 2 + 12, size.height + 24)
+            owner,
+            pos: new Point(size.width / 2 + 12, size.height + 24),
+            id: 'bottom'
         }]
     }
 

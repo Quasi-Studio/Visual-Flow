@@ -1,7 +1,8 @@
 import { Block } from "../block/block"
-import { Tricolor, TricolorPreset } from "../block/color"
+import { Tricolor } from "../type/color"
+import { TricolorPreset } from "../preset/color"
 import { appendChild } from "../util/appendChild"
-import { Point } from "../util/coordinate"
+import { Point } from "../type/point"
 import { FlowGraph } from "./flowgraph"
 
 abstract class Interactor {
@@ -35,7 +36,7 @@ class SocketHint extends Interactor {
         let min_dis: number = Number.MAX_VALUE
         let min_pos: Point | undefined = undefined
         for (let blk of this.par.block_pool.blocks) {
-            let socket = blk.val.plugins.shape.socket
+            let socket = blk.val.plugins.shape.socket(blk)
             for (let soc of socket) {
                 let socket_pos = new Point(soc.pos.x + blk.val.fields.position.x - 5, soc.pos.y + blk.val.fields.position.y - 5)
 

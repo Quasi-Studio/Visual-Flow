@@ -1,6 +1,7 @@
-import { Block, BlockShape } from "../block/block"
+import { Block } from "../block/block"
+import { BlockShape } from "../type/block"
 import { Drag, Interactor, SocketHint } from "./interact"
-import { BlockPool } from "./block_pool"
+import { BlockPool } from "./pool"
 
 class FlowGraph {
     el: SVGSVGElement
@@ -11,7 +12,7 @@ class FlowGraph {
         this.el = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
         this.interact.SocketHint = new SocketHint(this)
         this.interact.Drag = new Drag(this)
-        this.block_pool = new BlockPool(this.el)
+        this.block_pool = new BlockPool()
 
         this.el.setAttribute('width', '100%')
         this.el.setAttribute('height', '1000px')

@@ -1,7 +1,7 @@
-import BlockPreset from './block/preset/shape';
-import { FlowGraph } from './flowgraph/flowgraph';
+import BlockPreset from './preset/shape'
+import { FlowGraph } from './flowgraph/flowgraph'
 import mdui from "mdui"
-import { Point } from './util/coordinate';
+import { Point } from './type/point'
 
 function inject(id: string): void {
     let flowgraph = new FlowGraph()
