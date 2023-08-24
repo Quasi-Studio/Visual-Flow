@@ -65,7 +65,6 @@ class Drag extends Interactor {
         ev.preventDefault()
         let mouse = new Point(ev.clientX, ev.clientY)
         this.mouse_start = mouse
-        console.log('down', mouse)
         if (! blk.val.fields.selected) {
             blk.patch({ selected: true })
             this.dragging = false
@@ -75,9 +74,6 @@ class Drag extends Interactor {
         }
     }
     onmousemove(ev: MouseEvent): void {
-        // console.log('moveing', ev)
-        
-        console.log(this.dragging)
         if (this.dragging) {
             for (let blk of this.par.block_pool.blocks)
                 if (blk.val.fields.selected)
@@ -88,7 +84,6 @@ class Drag extends Interactor {
                         )
                     })
             this.mouse_start = new Point(ev.clientX, ev.clientY)
-            console.log('moving')
         }
         ev.preventDefault()
     }

@@ -19,6 +19,10 @@ class FlowGraph {
             for (let blk of this.block_pool.blocks)
                 blk.patch({ selected: false })
         })
+
+        this.el.addEventListener('mousemove', (ev) => {
+            (this.interact.Drag as Drag).onmousemove(ev)
+        })
     }
 
     create_block(shape: BlockShape): Block {
@@ -28,15 +32,6 @@ class FlowGraph {
         let drag = this.interact.Drag as Drag
         b.el.addEventListener('mousedown', (ev) => drag.onmousedown(b, ev))
         b.el.addEventListener('mouseup', (ev) => drag.onmouseup(b, ev))
-        b.el.addEventListener('mousemove', (ev) => drag.onmousemove(ev))
-        // setInterval(() => {
-        //     b.patch({
-        //         shape: {
-        //             text: b.val.plugins.shape.text[0].text + '!'
-        //         }
-        //     })
-        // }, 1000)
-        
         return b
     }
 }
