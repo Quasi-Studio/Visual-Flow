@@ -8,6 +8,20 @@ class Drag {
 
     constructor (private par: FlowGraph) {
         this.mouse_start = new Point(0, 0)
+        
+        this.par.el.addEventListener('click', (_) => {
+            for (let blk of this.par.block_pool.blocks)
+                blk.patch({ selected: false })
+        })
+        
+        this.par.el.addEventListener('mousemove', (ev) => {
+            this.onmousemove(ev)
+        })
+    }
+
+    init_block(b: Block): void {
+        b.el.addEventListener('mousedown', (ev) => this.onmousedown(b, ev))
+        b.el.addEventListener('mouseup', (ev) => this.onmouseup(b, ev))
     }
 
     onmousedown(blk: Block, ev: MouseEvent): void {
