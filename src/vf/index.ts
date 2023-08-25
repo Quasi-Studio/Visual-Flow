@@ -1,5 +1,4 @@
-// import inject from "./main"
-import inject from "./new"
+import inject from "./inject"
 
 export {
     inject
