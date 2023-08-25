@@ -1,4 +1,4 @@
-import { Block } from "../block/block"
+import { Block } from "../flowgraph/block"
 import { Color, Tricolor } from "./color"
 import { PluginConfig } from "./element-base"
 import { Point } from "./point"

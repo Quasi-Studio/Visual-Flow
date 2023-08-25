@@ -1,4 +1,4 @@
-import { Block } from "../block/block"
+import { Block } from "./block"
 import { Point } from "../type/point"
 
 class BlockPool {

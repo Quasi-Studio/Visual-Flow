@@ -3,7 +3,7 @@ import { BlockShape, Socket } from "../type/block"
 import { Color, Tricolor } from "../type/color"
 import { ColorPreset, TricolorPreset } from "./color"
 import calculateTextSize from '../util/font'
-import { Block } from "../block/block"
+import { Block } from "../flowgraph/block"
 
 interface TextBlockCreateOption {
     text_color?: Color
@@ -43,7 +43,6 @@ class TextBlock extends BlockShape {
 
     get path(): string {
         let size = calculateTextSize(this.text_size, this.text_font, this.text_content)
-        console.log(size)
         return `m 0 12 v ${size.height} c 0 9 3 12 12 12 h ${size.width} c 9 0 12 -3 12 -12 v -${size.height} c 0 -9 -3 -12 -12 -12 h -${size.width} c -9 0 -12 3 -12 12`
     }
 
