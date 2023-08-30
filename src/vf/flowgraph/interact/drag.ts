@@ -1,3 +1,4 @@
+import { socket_hint } from "."
 import { Point } from "../../type/point"
 import { Block } from "../block"
 import { FlowGraph } from "../flowgraph"
@@ -26,6 +27,8 @@ class Drag {
 
     onmousedown(blk: Block, ev: MouseEvent): void {
         ev.preventDefault()
+        if (socket_hint.visibility === 'visible')
+            return
         let mouse = new Point(ev.clientX, ev.clientY)
         this.mouse_start = mouse
         if (! blk.val.fields.selected) {

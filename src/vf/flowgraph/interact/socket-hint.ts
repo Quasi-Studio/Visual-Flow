@@ -8,6 +8,7 @@ import { FlowGraph } from "../flowgraph"
 class SocketHint {
     el: SVGSVGElement
     readonly color: Tricolor = TricolorPreset['tangerine']
+    visibility: 'visible' | 'hidden'
 
     constructor (private par: FlowGraph) {
         
@@ -18,6 +19,7 @@ class SocketHint {
         path.setAttribute('fill', this.color.primary.hex())
         this.el.appendChild(path)
         this.el.setAttribute('visibility', 'hidden')
+        this.visibility = 'hidden'
         appendChild(par, this)
         par.el.addEventListener('mousemove', this.onmousemove.bind(this))
     }
@@ -43,9 +45,11 @@ class SocketHint {
         if (owner && min_dis < 20) {
             min_pos!.apply(this.el, 'left-top')
             this.el.setAttribute('visibility', 'visible')
-            this.el.parentNode?.appendChild(this.el)
+            this.visibility = 'visible'
+            this.el.parentNode?.appendChild(this.el) // raise to top
         } else {
             this.el.setAttribute('visibility', 'hidden')
+            this.visibility = 'hidden'
         }
     }
 }

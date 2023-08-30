@@ -12,12 +12,7 @@ class BlockPool {
     }
 
     lift_block(e: Block): void {
-        let i = this.blocks.indexOf(e)
-        if (i === -1) {
-            console.error("Block not found")
-            return
-        }
-        e.el.parentNode?.appendChild(e.el)
+        e.el.parentNode!.appendChild(e.el)
     }
 }
 
