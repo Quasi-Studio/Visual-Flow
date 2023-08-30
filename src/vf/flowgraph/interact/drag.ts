@@ -40,6 +40,9 @@ class Drag {
         }
     }
     onmousemove(ev: MouseEvent): void {
+        ev.preventDefault()
+        if (socket_hint.visibility === 'visible')
+            return
         if (this.dragging) {
             for (let blk of this.par.block_pool.blocks)
                 if (blk.val.fields.selected)
@@ -54,8 +57,10 @@ class Drag {
         ev.preventDefault()
     }
     onmouseup(blk: Block, ev: MouseEvent): void {
-        this.par.block_pool.lift_block(blk)
         ev.preventDefault()
+        if (socket_hint.visibility === 'visible')
+            return
+        this.par.block_pool.lift_block(blk)
         if (ev.clientX == this.mouse_start.x && ev.clientY == this.mouse_start.y && this.dragging) {
             blk.patch({ selected: false })
             this.dragging = false
