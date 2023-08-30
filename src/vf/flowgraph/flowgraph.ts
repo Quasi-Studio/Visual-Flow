@@ -1,15 +1,19 @@
 import { Block } from "./block"
 import { BlockShape } from "../type/block"
-import { BlockPool } from "./pool"
+import { BlockPool, SocketPool } from "./pool"
 import { drag, init as interact_init } from "./interact"
+import { Guid, root } from "../util/guid"
 
 class FlowGraph {
     el: SVGSVGElement
     block_pool: BlockPool
+    socket_pool: SocketPool
+    guid: Guid = root
 
     constructor () {
         this.el = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
-        this.block_pool = new BlockPool()
+        this.block_pool = new BlockPool(this.guid.alloc())
+        this.socket_pool = new SocketPool(this.guid.alloc())
         this.el.setAttribute('width', '100%')
         this.el.setAttribute('height', '1000px')
     

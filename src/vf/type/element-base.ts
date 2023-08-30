@@ -1,3 +1,5 @@
+import { Guid } from "../util/guid"
+
 type Patch = {
     [key: string]: any
 }
@@ -23,7 +25,8 @@ interface BaseConfig {
     },
     fields: {
         [key: string]: any
-    }
+    },
+    id: Guid
 }
 
 abstract class ElementBase<T extends BaseConfig> {

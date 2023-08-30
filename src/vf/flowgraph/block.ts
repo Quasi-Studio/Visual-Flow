@@ -1,7 +1,10 @@
-import { BlockShape } from "../type/block"
+import { BlockShape, Socket } from "../type/block"
 import { ElementBase } from "../type/element-base"
 import { appendChild } from "../util/appendChild"
 import { Point } from "../type/point"
+import { Guid, root } from "../util/guid"
+
+let block_guid = root.alloc()
 
 class Block extends ElementBase<{
     plugins: {
@@ -9,8 +12,10 @@ class Block extends ElementBase<{
     }
     fields: {
         selected: boolean,
-        position: Point
-    }
+        position: Point,
+        socket: Socket[]
+    },
+    id: Guid
 }> {
     el: SVGSVGElement = undefined as any
     path_el: SVGPathElement = undefined as any
@@ -23,8 +28,10 @@ class Block extends ElementBase<{
             },
             fields: {
                 selected: false,
-                position: new Point(100, 200)
-            }
+                position: new Point(100, 200),
+                socket: []
+            },
+            id: block_guid.alloc()
         })
     }
     
@@ -49,6 +56,8 @@ class Block extends ElementBase<{
             appendChild(this, text)
             this.text_el.push(text)
         }
+
+        this.update('socket')
     }
 
     update(a: string): void {
@@ -79,6 +88,9 @@ class Block extends ElementBase<{
             // 不得已才这么做的
         }
 
+        if (a === 'socket') {
+            this.val.fields.socket = this.val.plugins.shape.socket(this)
+        }
     }
 
 }
