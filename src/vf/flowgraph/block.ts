@@ -3,6 +3,7 @@ import { ElementBase } from "../type/element-base"
 import { appendChild } from "../util/appendChild"
 import { Point } from "../type/point"
 import { Guid, root } from "../util/guid"
+import { flowgraph } from "./flowgraph"
 
 let block_guid = root.alloc()
 
@@ -89,7 +90,10 @@ class Block extends ElementBase<{
         }
 
         if (a === 'socket') {
-            this.val.fields.socket = this.val.plugins.shape.socket(this)
+            // this.val.fields.socket = this.val.plugins.shape.socket(this)
+            let socket = this.val.plugins.shape.socket
+            let exist_socket = flowgraph.socket_pool.search_block(this)
+            // TODO: handle the diff
         }
     }
 

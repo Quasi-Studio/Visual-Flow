@@ -1,6 +1,6 @@
 import { Block } from "./block"
-import { Point } from "../type/point"
 import { Guid, owner } from "../util/guid"
+import { Socket } from "../type/block"
 
 class BlockPool {
     blocks: Block[] = []
@@ -14,12 +14,6 @@ class BlockPool {
     lift_block(e: Block): void {
         e.el.parentNode!.appendChild(e.el)
     }
-}
-
-interface Socket {
-    pos: Point,
-    id: Guid,
-    used: boolean
 }
 
 class SocketPool {
@@ -38,14 +32,13 @@ class SocketPool {
     remove_block(e: Block): void {
         this.sockets = this.sockets.filter((el) => owner(el.id) !== e.val.id.guid)
     }
-}
 
-class LinePool {
-    
+    search_block(e: Block): Socket[] {
+        return this.sockets.filter((el) => owner(el.id) === e.val.id.guid)
+    }
 }
 
 export {
     BlockPool,
-    SocketPool,
-    LinePool
+    SocketPool
 }

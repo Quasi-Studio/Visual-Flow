@@ -1,7 +1,7 @@
 import { Block } from "./block"
 import { BlockShape } from "../type/block"
 import { BlockPool, SocketPool } from "./pool"
-import { drag, init as interact_init } from "./interact"
+import { drag } from "./interact/drag"
 import { Guid, root } from "../util/guid"
 
 class FlowGraph {
@@ -17,7 +17,6 @@ class FlowGraph {
         this.el.setAttribute('width', '100%')
         this.el.setAttribute('height', '1000px')
     
-        interact_init(this)
     }
 
     create_block(shape: BlockShape): Block {
@@ -29,6 +28,9 @@ class FlowGraph {
     }
 }
 
+let flowgraph = new FlowGraph()
+
 export {
-    FlowGraph
+    FlowGraph,
+    flowgraph
 }

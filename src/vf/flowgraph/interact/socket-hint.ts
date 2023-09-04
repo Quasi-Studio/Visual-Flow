@@ -3,14 +3,14 @@ import { Tricolor } from "../../type/color"
 import { Point } from "../../type/point"
 import { appendChild } from "../../util/appendChild"
 import { Block } from "../block"
-import { FlowGraph } from "../flowgraph"
+import { flowgraph } from "../flowgraph"
 
 class SocketHint {
     el: SVGSVGElement
     readonly color: Tricolor = TricolorPreset['tangerine']
     visibility: 'visible' | 'hidden'
 
-    constructor (private par: FlowGraph) {
+    constructor () {
         
         this.el = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
         let path = document.createElementNS('http://www.w3.org/2000/svg', 'path')
@@ -20,8 +20,8 @@ class SocketHint {
         this.el.appendChild(path)
         this.el.setAttribute('visibility', 'hidden')
         this.visibility = 'hidden'
-        appendChild(par, this)
-        par.el.addEventListener('mousemove', this.onmousemove.bind(this))
+        appendChild(flowgraph, this)
+        flowgraph.el.addEventListener('mousemove', this.onmousemove.bind(this))
     }
 
     onmousemove(ev: MouseEvent): void {
@@ -30,8 +30,8 @@ class SocketHint {
         let owner: Block | undefined = undefined
         let min_dis: number = Number.MAX_VALUE
         let min_pos: Point | undefined = undefined
-        for (let blk of this.par.block_pool.blocks) {
-            let socket = blk.val.plugins.shape.socket(blk)
+        for (let blk of flowgraph.block_pool.blocks) {
+            let socket = blk.val.plugins.shape.socket
             for (let soc of socket) {
                 let socket_pos = new Point(soc.pos.x + blk.val.fields.position.x - 5, soc.pos.y + blk.val.fields.position.y - 5)
 
@@ -54,6 +54,9 @@ class SocketHint {
     }
 }
 
+let socket_hint = new SocketHint()
+
 export {
-    SocketHint
+    SocketHint,
+    socket_hint
 }

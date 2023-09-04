@@ -1,12 +1,19 @@
-import { Block } from "../flowgraph/block"
+import { Guid } from "../util/guid"
 import { Color, Tricolor } from "./color"
+import { Direction } from "./dire"
 import { PluginConfig } from "./element-base"
 import { Point } from "./point"
 
 interface Socket {
-    owner: Block
-    pos: Point
-    id: string
+    pos: Point,
+    id: Guid,
+    used: boolean,
+    face: Direction
+}
+
+interface SocketInfo {
+    pos: Point,
+    face: Direction
 }
 
 abstract class BlockShape extends PluginConfig {
@@ -14,7 +21,7 @@ abstract class BlockShape extends PluginConfig {
     abstract get color(): Tricolor
     abstract get path(): string
     abstract get text(): { text: string, pos: Point, color: Color, size: number, font: string }[]
-    abstract socket(owner: Block): Socket[]
+    abstract get socket(): SocketInfo[]
 
 }
 
