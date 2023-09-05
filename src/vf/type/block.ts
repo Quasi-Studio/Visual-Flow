@@ -1,20 +1,8 @@
-import { Guid } from "../util/guid"
 import { Color, Tricolor } from "./color"
-import { Direction } from "./dire"
 import { PluginConfig } from "./element-base"
 import { Point } from "./point"
+import { SocketInfo } from "./socket"
 
-interface Socket {
-    pos: Point,
-    id: Guid,
-    used: boolean,
-    face: Direction
-}
-
-interface SocketInfo {
-    pos: Point,
-    face: Direction
-}
 
 abstract class BlockShape extends PluginConfig {
     // 其中的 pos 都是相对于 block 左上角的 offset
@@ -27,8 +15,4 @@ abstract class BlockShape extends PluginConfig {
 
 export {
     BlockShape
-}
-
-export type {
-    Socket
 }
