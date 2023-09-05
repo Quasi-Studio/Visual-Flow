@@ -1,9 +1,10 @@
-import { BlockShape, Socket } from "../type/block"
+import { BlockShape } from "../type/block"
 import { ElementBase } from "../type/element-base"
 import { appendChild } from "../util/appendChild"
 import { Point } from "../type/point"
 import { Guid, root } from "../util/guid"
 import { flowgraph } from "./flowgraph"
+import { Socket } from "../type/socket"
 
 let block_guid = root.alloc()
 
@@ -18,8 +19,8 @@ class Block extends ElementBase<{
     },
     id: Guid
 }> {
-    el: SVGSVGElement = undefined as any
-    path_el: SVGPathElement = undefined as any
+    el: SVGSVGElement
+    path_el: SVGPathElement
     text_el: SVGTextElement[] = []
 
     constructor (shape: BlockShape) {
@@ -93,7 +94,11 @@ class Block extends ElementBase<{
             // this.val.fields.socket = this.val.plugins.shape.socket(this)
             let socket = this.val.plugins.shape.socket
             let exist_socket = flowgraph.socket_pool.search_block(this)
-            // TODO: handle the diff
+            
+            for (let i of exist_socket) {
+                // let info = extract_socket_info(i)
+
+            }
         }
     }
 
