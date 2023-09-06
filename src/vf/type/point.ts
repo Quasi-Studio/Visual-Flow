@@ -43,6 +43,14 @@ class Point {
     static eq(lhs: Point, rhs: Point): boolean {
         return lhs.x == rhs.x && lhs.y == rhs.y
     }
+
+    static add(a: Point, b: Point): Point {
+        return new Point(a.x + b.x, a.y + b.y)
+    }
+
+    static minus(a: Point, b: Point): Point {
+        return new Point(a.x - b.x, a.y - b.y)
+    }
 }
 
 export {
