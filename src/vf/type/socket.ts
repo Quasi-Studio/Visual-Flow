@@ -20,7 +20,10 @@ class Socket {
     }
 
     get info(): SocketInfo {
-        return new SocketInfo(this.pos, this.face)
+        return {
+            pos: this.pos,
+            face: this.face
+        }
     }
 
     static eq(lhs: Socket, rhs: Socket) {
@@ -28,15 +31,15 @@ class Socket {
     }
 }
 
-class SocketInfo {
-    constructor (public pos: Point, public face: Direction) {}
-
-    static eq(lhs: SocketInfo, rhs: SocketInfo) {
-        return Point.eq(lhs.pos, rhs.pos) && lhs.face === rhs.face
-    }
+interface SocketInfo {
+    pos: Point,
+    face: Direction
 }
 
 export {
-    Socket,
+    Socket
+}
+
+export type {
     SocketInfo
 }
