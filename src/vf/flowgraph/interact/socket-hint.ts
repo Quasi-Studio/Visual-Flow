@@ -2,13 +2,14 @@ import { TricolorPreset } from "../../preset/color"
 import { Tricolor } from "../../type/color"
 import { Point } from "../../type/point"
 import { appendChild } from "../../util/appendChild"
-import { Block } from "../block"
 import { flowgraph } from "../flowgraph"
 
 class SocketHint {
     el: SVGSVGElement
     readonly color: Tricolor = TricolorPreset['tangerine']
     visibility: 'visible' | 'hidden'
+
+    static readonly radis = 20
 
     constructor () {
         
@@ -30,23 +31,12 @@ class SocketHint {
     onmousemove(ev: MouseEvent): void {
         ev.preventDefault()
         let mouse = new Point(ev.offsetX, ev.offsetY)
-        let owner: Block | undefined = undefined
-        let min_dis: number = Number.MAX_VALUE
-        let min_pos: Point | undefined = undefined
-        for (let blk of flowgraph.block_pool.blocks) {
-            let socket = blk.val.plugins.shape.socket
-            for (let soc of socket) {
-                let socket_pos = new Point(soc.pos.x + blk.val.fields.position.x - 5, soc.pos.y + blk.val.fields.position.y - 5)
 
-                if (Point.distance(socket_pos, mouse) < min_dis) {
-                    min_dis = Point.distance(socket_pos, mouse)
-                    min_pos = socket_pos
-                    owner = blk
-                }
-            }
-        }
-        if (owner && min_dis < 20) {
-            min_pos!.apply(this.el, 'left-top')
+        let nearest = flowgraph.socket_pool.nearest(mouse)
+
+        if (nearest.soc !== undefined && nearest.dis < SocketHint.radis) {
+            let fixed_pos = Point.add(nearest.soc.abs_pos, new Point(-5, -5))
+            fixed_pos.apply(this.el, 'left-top')
             this.el.setAttribute('visibility', 'visible')
             this.visibility = 'visible'
             this.el.parentNode?.appendChild(this.el) // raise to top
@@ -54,6 +44,7 @@ class SocketHint {
             this.el.setAttribute('visibility', 'hidden')
             this.visibility = 'hidden'
         }
+
     }
 }
 

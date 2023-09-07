@@ -14,7 +14,7 @@ function alloc(par: Guid): Guid {
 }
 
 function owner(e: Guid): string {
-    return e.guid.split('.')[0]
+    return e.guid.substr(0, e.guid.lastIndexOf('.'))
 }
 
 let root: Guid = {} as any
