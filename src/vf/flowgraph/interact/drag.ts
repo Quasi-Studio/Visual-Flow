@@ -9,7 +9,9 @@ class Drag {
 
     constructor () {
         this.mouse_start = new Point(0, 0)
-        
+    }
+    
+    init() {
         flowgraph.el.addEventListener('click', (_) => {
             for (let blk of flowgraph.block_pool.blocks)
                 blk.patch({ selected: false })

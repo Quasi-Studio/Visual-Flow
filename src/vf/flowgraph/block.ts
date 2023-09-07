@@ -3,7 +3,7 @@ import { ElementBase } from "../type/element-base"
 import { appendChild } from "../util/appendChild"
 import { Point } from "../type/point"
 import { Guid, root } from "../util/guid"
-import { FlowGraph, flowgraph } from "./flowgraph"
+import { flowgraph } from "./flowgraph"
 import { Socket, SocketInfo, SocketInfoEq } from "../type/socket"
 import { find } from "../util/array"
 

@@ -1,9 +1,9 @@
 import { Point } from "../type/point"
-import { BlockShape, Socket } from "../type/block"
+import { BlockShape } from "../type/block"
 import { Color, Tricolor } from "../type/color"
 import { ColorPreset, TricolorPreset } from "./color"
 import calculateTextSize from '../util/font'
-import { Block } from "../flowgraph/block"
+import { SocketInfo } from "../type/socket"
 
 interface TextBlockCreateOption {
     text_color?: Color
@@ -57,24 +57,20 @@ class TextBlock extends BlockShape {
         }]
     }
 
-    socket(owner: Block): Socket[] {
+    get socket(): SocketInfo[] {
         let size = calculateTextSize(this.text_size, this.text_font, this.text_content)
         return [{
-            owner,
             pos: new Point(0, size.height / 2 + 12),
-            id: 'left'
+            face: 'left'
         }, {
-            owner,
             pos: new Point(size.width / 2 + 12, 0),
-            id: 'top'
+            face: 'up'
         }, {
-            owner,
             pos: new Point(size.width + 24, size.height / 2 + 12),
-            id: 'right'
+            face: 'right'
         }, {
-            owner,
             pos: new Point(size.width / 2 + 12, size.height + 24),
-            id: 'bottom'
+            face: 'down'
         }]
     }
 

@@ -3,6 +3,7 @@ import { BlockShape } from "../type/block"
 import { BlockPool, SocketPool } from "./pool"
 import { drag } from "./interact/drag"
 import { Guid, root } from "../util/guid"
+import { socket_hint } from "./interact/socket-hint"
 
 class FlowGraph {
     el: SVGSVGElement
@@ -16,7 +17,11 @@ class FlowGraph {
         this.socket_pool = new SocketPool(this.guid.alloc())
         this.el.setAttribute('width', '100%')
         this.el.setAttribute('height', '1000px')
+    }
     
+    init() {
+        socket_hint.init()
+        drag.init()
     }
 
     create_block(shape: BlockShape): Block {
@@ -29,6 +34,7 @@ class FlowGraph {
 }
 
 let flowgraph = new FlowGraph()
+flowgraph.init()
 
 export {
     FlowGraph,

@@ -20,6 +20,9 @@ class SocketHint {
         this.el.appendChild(path)
         this.el.setAttribute('visibility', 'hidden')
         this.visibility = 'hidden'
+    }
+    
+    init() {
         appendChild(flowgraph, this)
         flowgraph.el.addEventListener('mousemove', this.onmousemove.bind(this))
     }
