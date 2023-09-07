@@ -1,6 +1,6 @@
 import { Block } from "./block"
 import { Guid, owner } from "../util/guid"
-import { Socket } from "../type/block"
+import { Socket } from "../type/socket"
 
 class BlockPool {
     blocks: Block[] = []

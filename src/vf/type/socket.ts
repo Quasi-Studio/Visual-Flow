@@ -36,8 +36,13 @@ interface SocketInfo {
     face: Direction
 }
 
+function SocketInfoEq(lhs: SocketInfo, rhs: SocketInfo) {
+    return Point.eq(lhs.pos, rhs.pos) && lhs.face === rhs.face
+}
+
 export {
-    Socket
+    Socket,
+    SocketInfoEq
 }
 
 export type {
