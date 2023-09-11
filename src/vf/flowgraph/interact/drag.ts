@@ -2,6 +2,7 @@ import { socket_hint } from "./socket-hint"
 import { Point } from "../../type/point"
 import { Block } from "../block"
 import { flowgraph } from "../flowgraph"
+import { block_pool } from "../pool"
 
 class Drag {
     mouse_start: Point
@@ -13,7 +14,7 @@ class Drag {
     
     init() {
         flowgraph.el.addEventListener('click', (_) => {
-            for (let blk of flowgraph.block_pool.blocks)
+            for (let blk of block_pool.blocks)
                 blk.patch({ selected: false })
         })
         
@@ -46,7 +47,7 @@ class Drag {
         if (socket_hint.visibility === 'visible')
             return
         if (this.dragging) {
-            for (let blk of flowgraph.block_pool.blocks)
+            for (let blk of block_pool.blocks)
                 if (blk.val.fields.selected)
                     blk.patch({
                         position: new Point(
@@ -62,7 +63,7 @@ class Drag {
         ev.preventDefault()
         if (socket_hint.visibility === 'visible')
             return
-        flowgraph.block_pool.lift_block(blk)
+        block_pool.lift_block(blk)
         if (ev.clientX == this.mouse_start.x && ev.clientY == this.mouse_start.y && this.dragging) {
             blk.patch({ selected: false })
             this.dragging = false

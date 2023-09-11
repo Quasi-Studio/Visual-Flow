@@ -3,6 +3,7 @@ import { Tricolor } from "../../type/color"
 import { Point } from "../../type/point"
 import { appendChild } from "../../util/appendChild"
 import { flowgraph } from "../flowgraph"
+import { socket_pool } from "../pool"
 
 class SocketHint {
     el: SVGSVGElement
@@ -32,7 +33,7 @@ class SocketHint {
         ev.preventDefault()
         let mouse = new Point(ev.offsetX, ev.offsetY)
 
-        let nearest = flowgraph.socket_pool.nearest(mouse)
+        let nearest = socket_pool.nearest(mouse)
 
         if (nearest.soc !== undefined && nearest.dis < SocketHint.radis) {
             let fixed_pos = Point.add(nearest.soc.abs_pos, new Point(-5, -5))

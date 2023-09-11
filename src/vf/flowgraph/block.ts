@@ -3,7 +3,7 @@ import { ElementBase } from "../type/element-base"
 import { appendChild } from "../util/appendChild"
 import { Point } from "../type/point"
 import { Guid, root } from "../util/guid"
-import { flowgraph } from "./flowgraph"
+import { socket_pool } from "./pool"
 import { Socket, SocketInfo, SocketInfoEq } from "../type/socket"
 import { find } from "../util/array"
 
@@ -93,13 +93,13 @@ class Block extends ElementBase<{
 
         if (a === 'socket') {
             let socket = this.val.plugins.shape.socket
-            let exist_socket = flowgraph.socket_pool.search_block(this)
+            let exist_socket = socket_pool.search_block(this)
 
             for (let i of exist_socket) {
                 let info = i.info
                 let e: SocketInfo | undefined
                 if ((e = find(socket, (e: SocketInfo) => SocketInfoEq(info, e))) && e !== undefined) {
-                    flowgraph.socket_pool.remove_socket(i)
+                    socket_pool.remove_socket(i)
                     socket = socket.filter((_e: SocketInfo) => _e !== e)
                 }
             }
@@ -111,7 +111,7 @@ class Block extends ElementBase<{
                     used: false,
                     id: this.val.id.alloc()
                 })
-                flowgraph.socket_pool.add_socket(s)
+                socket_pool.add_socket(s)
             }
         }
     }

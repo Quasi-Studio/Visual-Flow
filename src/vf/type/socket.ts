@@ -1,4 +1,4 @@
-import { flowgraph } from "../flowgraph/flowgraph"
+import { block_pool } from "../flowgraph/pool"
 import { Guid } from "../util/guid"
 import { Direction } from "./dire"
 import { Point } from "./point"
@@ -28,7 +28,7 @@ class Socket {
     }
 
     get abs_pos(): Point {
-        let blk = flowgraph.block_pool.owner(this)
+        let blk = block_pool.owner(this)
         if (blk === undefined)
             throw new Error("Socket has no owner")
         return Point.add(this.pos, blk.val.fields.position)

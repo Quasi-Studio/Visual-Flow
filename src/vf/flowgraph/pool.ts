@@ -1,12 +1,11 @@
 import { Block } from "./block"
-import { Guid, owner } from "../util/guid"
+import { owner } from "../util/guid"
 import { Socket } from "../type/socket"
 import { Point } from "../type/point"
+import { Line } from "../type/line"
 
 class BlockPool {
     blocks: Block[] = []
-
-    constructor(public guid: Guid) {}
 
     add_block(e: Block): void {
         this.blocks.push(e)
@@ -26,10 +25,10 @@ class BlockPool {
     }
 }
 
+let block_pool = new BlockPool()
+
 class SocketPool {
     sockets: Socket[] = []
-    
-    constructor(public guid: Guid) {}
 
     add_socket(e: Socket): void {
         this.sockets.push(e)
@@ -62,10 +61,26 @@ class SocketPool {
             dis: min_dis
         }
     }
-
 }
 
+let socket_pool = new SocketPool()
+
+class LinePool {
+    lines: Line[] = []
+
+    add_line(e: Line): void {
+        this.lines.push(e)
+    }
+
+    remote_line(e: Line): void {
+        this.lines = this.lines.filter((el) => el.id !== e.id)
+    }
+}
+
+let line_pool = new LinePool()
+
 export {
-    BlockPool,
-    SocketPool
+    block_pool,
+    socket_pool,
+    line_pool
 }
