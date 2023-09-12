@@ -72,7 +72,7 @@ class Drag {
     }
 }
 
-let drag = new Drag()
+const drag = new Drag()
 
 export {
     Drag,

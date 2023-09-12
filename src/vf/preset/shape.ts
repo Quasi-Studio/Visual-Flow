@@ -61,16 +61,20 @@ class TextBlock extends BlockShape {
         let size = calculateTextSize(this.text_size, this.text_font, this.text_content)
         return [{
             pos: new Point(0, size.height / 2 + 12),
-            face: 'left'
+            face: 'left',
+            hint: 'left'
         }, {
             pos: new Point(size.width / 2 + 12, 0),
-            face: 'up'
+            face: 'up',
+            hint: 'up'
         }, {
             pos: new Point(size.width + 24, size.height / 2 + 12),
-            face: 'right'
+            face: 'right',
+            hint: 'right'
         }, {
             pos: new Point(size.width / 2 + 12, size.height + 24),
-            face: 'down'
+            face: 'down',
+            hint: 'down'
         }]
     }
 

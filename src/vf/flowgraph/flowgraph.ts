@@ -29,7 +29,7 @@ class FlowGraph {
     }
 }
 
-let flowgraph = new FlowGraph()
+const flowgraph = new FlowGraph()
 flowgraph.init()
 
 export {

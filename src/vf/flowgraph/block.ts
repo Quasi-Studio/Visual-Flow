@@ -7,7 +7,7 @@ import { socket_pool } from "./pool"
 import { Socket, SocketInfo, SocketInfoEq } from "../type/socket"
 import { find } from "../util/array"
 
-let block_guid = root.alloc()
+const block_guid = root.alloc()
 
 class Block extends ElementBase<{
     plugins: {

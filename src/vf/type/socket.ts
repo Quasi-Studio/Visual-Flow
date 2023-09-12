@@ -8,6 +8,7 @@ class Socket {
     id: Guid
     used: boolean
     face: Direction
+    hint: string
 
     constructor (info: { [key: string]: any}) {
         if (info.pos !== undefined)
@@ -18,12 +19,15 @@ class Socket {
             this.used = info.used as boolean
         if (info.face !== undefined)
             this.face = info.face as Direction
+        if (info.hint !== undefined)
+            this.hint = info.hint as string
     }
 
     get info(): SocketInfo {
         return {
             pos: this.pos,
-            face: this.face
+            face: this.face,
+            hint: this.hint
         }
     }
 
@@ -41,7 +45,8 @@ class Socket {
 
 interface SocketInfo {
     pos: Point,
-    face: Direction
+    face: Direction,
+    hint: string
 }
 
 function SocketInfoEq(lhs: SocketInfo, rhs: SocketInfo) {

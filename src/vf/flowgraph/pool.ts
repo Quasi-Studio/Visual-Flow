@@ -25,7 +25,7 @@ class BlockPool {
     }
 }
 
-let block_pool = new BlockPool()
+const block_pool = new BlockPool()
 
 class SocketPool {
     sockets: Socket[] = []
@@ -63,7 +63,7 @@ class SocketPool {
     }
 }
 
-let socket_pool = new SocketPool()
+const socket_pool = new SocketPool()
 
 class LinePool {
     lines: Line[] = []
@@ -77,7 +77,7 @@ class LinePool {
     }
 }
 
-let line_pool = new LinePool()
+const line_pool = new LinePool()
 
 export {
     block_pool,
