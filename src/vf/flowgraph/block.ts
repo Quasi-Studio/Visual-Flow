@@ -109,7 +109,8 @@ class Block extends ElementBase<{
                     pos: i.pos,
                     face: i.face,
                     used: false,
-                    id: this.val.id.alloc()
+                    id: this.val.id.alloc(),
+                    hint: i.hint
                 })
                 socket_pool.add_socket(s)
             }
