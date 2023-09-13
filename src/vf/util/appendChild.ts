@@ -1,15 +1,13 @@
-
-// append b to a
 function appendChild(
-    a: HTMLElement | SVGElement | {
+    par: HTMLElement | SVGElement | {
         el: HTMLElement | SVGElement;
     },
-    b: HTMLElement | SVGElement | {
+    son: HTMLElement | SVGElement | {
         el: HTMLElement | SVGElement;
     }
 ) {
-    ((a instanceof HTMLElement || a instanceof SVGElement) ? a : a.el).appendChild(
-        (b instanceof HTMLElement || b instanceof SVGElement) ? b : b.el
+    ((par instanceof HTMLElement || par instanceof SVGElement) ? par : par.el).appendChild(
+        (son instanceof HTMLElement || son instanceof SVGElement) ? son : son.el
     )
 }
 
