@@ -46,10 +46,10 @@ class SocketPool {
         return this.sockets.filter((el) => owner(el.id) === e.val.id.guid)
     }
 
-    nearest(p: Point): { soc: Socket | undefined, dis: number } {
+    nearest(p: Point, filter: boolean = true): { soc: Socket | undefined, dis: number } {
         let min_dis: number = Number.MAX_VALUE
         let ret: Socket | undefined = undefined
-        for (let soc of this.sockets.filter((s) => ! s.used)) {
+        for (let soc of filter ? this.sockets.filter((s) => ! s.used) : this.sockets) {
             let dis = Point.distance(p, soc.abs_pos)
             if (dis < min_dis) {
                 min_dis = dis
@@ -60,6 +60,13 @@ class SocketPool {
             soc: ret,
             dis: min_dis
         }
+    } // need optimization
+
+    nearest_within(p: Point, dis: number, filter: boolean = true): Socket | undefined {
+        let ret = this.nearest(p, filter)
+        if (ret.soc === undefined || ret.dis > dis)
+            return undefined
+        return ret.soc
     }
 }
 

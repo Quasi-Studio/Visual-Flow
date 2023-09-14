@@ -10,7 +10,7 @@ function inject(id: string): void {
     let block_ = new BlockPreset.text('HelloWorld', { font: 'Aria', text_size: 50 })
     let bb = flowgraph.create_block(block_)
     bb.patch({
-        position: new Point(100, 150)
+        position: new Point(300, 150)
     })
 
     

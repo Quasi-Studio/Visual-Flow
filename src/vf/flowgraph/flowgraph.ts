@@ -4,6 +4,7 @@ import { block_pool } from "./pool"
 import { drag } from "./interact/drag"
 import { Guid, root } from "../util/guid"
 import { socket_hint } from "./interact/socket-hint"
+import { line_drag } from "./interact/line-drag"
 
 class FlowGraph {
     el: SVGSVGElement
@@ -18,6 +19,7 @@ class FlowGraph {
     init() {
         socket_hint.init()
         drag.init()
+        line_drag.init()
     }
 
     create_block(shape: BlockShape): Block {
@@ -25,6 +27,8 @@ class FlowGraph {
         b.init(this.el)
         block_pool.add_block(b)
         drag.init_block(b)
+        line_drag.init_block(b)
+        socket_hint.init_block(b)
         return b
     }
 }

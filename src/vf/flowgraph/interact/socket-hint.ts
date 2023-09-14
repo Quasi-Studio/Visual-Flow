@@ -4,6 +4,7 @@ import { Point } from "../../type/point"
 import { Socket } from "../../type/socket"
 import { appendChild } from "../../util/appendChild"
 import calculateTextSize from "../../util/font"
+import { Block } from "../block"
 import { flowgraph } from "../flowgraph"
 import { socket_pool } from "../pool"
 
@@ -52,31 +53,42 @@ class SocketHint {
     init() {
         appendChild(flowgraph, this.el)
         appendChild(flowgraph, this.text_svg)
-        flowgraph.el.addEventListener('mousemove', this.onmousemove.bind(this))
+        flowgraph.el.addEventListener('mousemove', this.mousemove.bind(this))
+        this.el.addEventListener('mousemove', this.mousemove.bind(this))
     }
 
-    onmousemove(ev: MouseEvent): void {
+    init_block(blk: Block) {
+        blk.el.addEventListener('mousemove', this.mousemove.bind(this))
+    }
+
+    mousemove(ev: MouseEvent): void {
         ev.preventDefault()
-        let mouse = new Point(ev.offsetX, ev.offsetY)
+        this.move(new Point(ev.clientX, ev.clientY))
+    }
 
-        let nearest = socket_pool.nearest(mouse)
+    move(mouse: Point): void {
+        let nearest = socket_pool.nearest_within(mouse, SocketHint.radis, false)
 
-        if (nearest.soc !== undefined && nearest.dis < SocketHint.radis) {
-            this.display(nearest.soc, mouse)
+        if (nearest !== undefined) {
+            this.display(nearest, mouse)
+            this.visibility = nearest.used ? 'hidden' : 'visible'
         } else {
             this.hidden()
+            this.visibility = 'hidden'
         }
 
     }
 
     display(soc: Socket, mouse_pos: Point): void {
-        let fixed_pos = Point.add(soc.abs_pos, new Point(-5, -5))
-        fixed_pos.apply(this.el, 'left-top')
-        this.el.setAttribute('visibility', 'visible')
-        this.visibility = 'visible'
-        this.el.parentNode?.appendChild(this.el) // raise to top
+        if (! soc.used) {
+            let fixed_pos = Point.add(soc.abs_pos, new Point(-5, -5))
+            fixed_pos.apply(this.el, 'left-top')
+            this.el.setAttribute('visibility', 'visible')
+            this.el.parentNode?.appendChild(this.el) // raise to top
+        } else {
+            this.el.setAttribute('visibility', 'hidden')
+        }
 
-        console.log(soc.hint)
         this.text.textContent = soc.hint
         let size = calculateTextSize(SocketHint.font_size, SocketHint.font_family, soc.hint)
         this.text_path.setAttribute('d', `m 0 0 v ${size.height + 5} h ${size.width + 5} v -${size.height + 5} h -${size.width + 5} z`)
@@ -91,7 +103,6 @@ class SocketHint {
 
     hidden(): void {
         this.el.setAttribute('visibility', 'hidden')
-        this.visibility = 'hidden'
         this.text_svg.setAttribute('visibility', 'hidden')
     }
 }

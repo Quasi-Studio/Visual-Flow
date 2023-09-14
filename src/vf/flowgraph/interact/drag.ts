@@ -7,10 +7,6 @@ import { block_pool } from "../pool"
 class Drag {
     mouse_start: Point
     dragging = false
-
-    constructor () {
-        this.mouse_start = new Point(0, 0)
-    }
     
     init() {
         flowgraph.el.addEventListener('click', (_) => {
@@ -30,10 +26,10 @@ class Drag {
 
     onmousedown(blk: Block, ev: MouseEvent): void {
         ev.preventDefault()
-        if (socket_hint.visibility === 'visible')
-            return
         let mouse = new Point(ev.clientX, ev.clientY)
         this.mouse_start = mouse
+        if (socket_hint.visibility === 'visible')
+            return
         if (! blk.val.fields.selected) {
             blk.patch({ selected: true })
             this.dragging = false
@@ -44,8 +40,6 @@ class Drag {
     }
     onmousemove(ev: MouseEvent): void {
         ev.preventDefault()
-        if (socket_hint.visibility === 'visible')
-            return
         if (this.dragging) {
             for (let blk of block_pool.blocks)
                 if (blk.val.fields.selected)
