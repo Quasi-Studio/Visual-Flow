@@ -89,6 +89,7 @@ class Block extends ElementBase<{
         if (a === 'shape.text') {
             this.text_el[0].textContent = this.val.plugins.shape.text[0].text
             // 不得已才这么做的
+            // TODO: Use Diff Algorithm
         }
 
         if (a === 'socket') {
