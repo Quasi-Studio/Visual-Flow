@@ -107,6 +107,7 @@ class LineDrag {
             start: this.temp_line.start_soc,
             end: nearest
         })
+        this.hidden()
         line_pool.add_line(line)
     }
 
@@ -114,7 +115,7 @@ class LineDrag {
         console.log("123243")
         this.path.setAttribute('d', `M ${this.temp_line.start.x} ${this.temp_line.start.y} L ${this.temp_line.end.x} ${this.temp_line.end.y}`)
         this.path.setAttribute('stroke-width', '5')
-        this.path.setAttribute('color', '#000000')
+        this.path.setAttribute('stroke', '#000000')
         this.path.setAttribute('visibility', 'visible')
     }
 

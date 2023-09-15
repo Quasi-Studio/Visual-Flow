@@ -1,4 +1,4 @@
-import { Color, Tricolor } from "../type/color";
+import { Color, Tricolor } from "../type/color"
 
 const TricolorPreset: { [k: string]: Tricolor } = {
     blue: new Tricolor(

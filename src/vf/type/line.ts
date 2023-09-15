@@ -1,5 +1,5 @@
-import { Guid, root } from "../util/guid";
-import { Socket } from "./socket";
+import { Guid, root } from "../util/guid"
+import { Socket } from "./socket"
 
 let line_guid = root.alloc()
 

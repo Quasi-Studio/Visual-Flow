@@ -2,12 +2,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { inject } from './vf';
+import { defineComponent } from 'vue'
+import { inject } from './vf'
 
 export default defineComponent({
   name: 'App'
-});
+})
 
 inject('apppppp')
 
