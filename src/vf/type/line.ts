@@ -45,39 +45,60 @@ class Line {
     get path(): string {
         let turning_point: Point[] = []
         
-        let ext_1 = Point.add(this.start.abs_pos, to_point(this.start.face, 20))
-        let ext_2 = Point.add(this.end.abs_pos, to_point(this.end.face, 20))
+        let start = this.start.abs_pos
+        let end = this.end.abs_pos
+
+        let dire_start = this.start.face
+        let dire_end = this.start.face
+
+        let ext_1 = Point.add(start, to_point(dire_start, 20))
+        let ext_2 = Point.add(end, to_point(dire_end, 20))
         
-        if (this.start.face === this.end.face || this.start.face === reverse(this.end.face)) {
-            let dire = this.start.face
-            if (this.start.face === this.end.face) { // U type
+        if (dire_start === dire_end || dire_start === reverse(dire_end)) {
+            let dire = dire_start
+            if (dire_start === dire_end) { // U type
                 let dis = further_dis(dire, ext_1, ext_2)
                 let tp1 = update_point(dire, ext_1, dis)
                 let tp2 = update_point(dire, ext_2, dis)
                 turning_point = [tp1, tp2]
             } else {
-                if (get_point(rotate(dire), this.start.abs_pos) === get_point(rotate(dire), this.end.abs_pos)) { // - type
+                if (get_point(rotate(dire), start) === get_point(rotate(dire), end)) { // - type
                     turning_point = []
                 } else {
                     let orth = rotate(dire)
-                    if (further(dire, this.end.abs_pos, this.start.abs_pos)) { // Z type
-                        let mid = (get_point(orth, this.start.abs_pos) + get_point(orth, this.end.abs_pos)) / 2
+                    if (further(dire, end, start)) { // Z type
+                        let mid = (get_point(orth, start) + get_point(orth, end)) / 2
+                        let tp1 = update_point(orth, start, mid)
+                        let tp2 = update_point(orth, end, mid)
+                        turning_point = [tp1, tp2]
+                    } else { // S type
+                        let mid = (get_point(orth, start) + get_point(orth, end)) / 2
                         let tp1 = update_point(orth, ext_1, mid)
                         let tp2 = update_point(orth, ext_2, mid)
                         turning_point = [ext_1, tp1, tp2, ext_2]
-                    } else { // S type
-
-
                     }
                 }
             }
         } else {
-            
+            if (further(dire_start, end, start) && further(dire_end, start, end)) { // L type
+                let tp = update_point(dire_start, start, get_point(dire_start, end))
+                turning_point = [tp]
+            }
+            if (further(dire_start, end, start) && ! further(dire_end, start, end)) { // ? type
+                
+            }
+            if (! further(dire_start, end, start) && further(dire_end, start, end)) { // ? type
+                
+            }
+            if (! further(dire_start, end, start) && ! further(dire_end, start, end)) { // C type
+                let tp = update_point(dire_end, ext_1, get_point(dire_end, ext_2))
+                turning_point = [ext_1, tp, ext_2]
+            }
         }
-        let ret = `m ${this.start.abs_pos.x} ${this.start.abs_pos.y}`
+        let ret = `m ${start.x} ${start.y}`
         for (let i of turning_point)
             ret += ` L ${i.x} ${i.y}`
-        ret += ` L ${this.end.abs_pos.x} ${this.end.abs_pos.y}`
+        ret += ` L ${end.x} ${end.y}`
         return ret
     }
 }
