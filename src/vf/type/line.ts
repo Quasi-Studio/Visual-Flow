@@ -1,4 +1,6 @@
+import { flowgraph } from "../flowgraph/flowgraph"
 import { TricolorPreset } from "../preset/color"
+import { appendChild } from "../util/appendChild"
 import { Guid, root } from "../util/guid"
 import { further, further_dis, get_point, reverse, rotate, to_point, update_point } from "./dire"
 import { Point } from "./point"
@@ -28,9 +30,13 @@ class Line {
         this.start.used = true
         this.end.used = true
         this.id = line_guid.alloc()
-
-        this.el = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+        
+        this.el = document.createElementNS('http://www.w3.org/2000/svg', 'polyline')
         this.el.setAttribute('stroke', Line.color.primary.hex())
+        this.el.setAttribute('stroke-width', '5')
+        this.el.setAttribute('fill', 'none')
+        appendChild(flowgraph.el, this)
+        this.display()
     }
 
     destructor () {
@@ -39,7 +45,7 @@ class Line {
     }
 
     display() {
-        this.el.setAttribute('d', this.path)
+        this.el.setAttribute('points', this.path)
     }
 
     get path(): string {
@@ -61,9 +67,11 @@ class Line {
                 let tp1 = update_point(dire, ext_1, dis)
                 let tp2 = update_point(dire, ext_2, dis)
                 turning_point = [tp1, tp2]
+                console.log('U Entered')
             } else {
                 if (get_point(rotate(dire), start) === get_point(rotate(dire), end)) { // - type
                     turning_point = []
+                    console.log('- Entered')
                 } else {
                     let orth = rotate(dire)
                     if (further(dire, end, start)) { // Z type
@@ -71,11 +79,13 @@ class Line {
                         let tp1 = update_point(orth, start, mid)
                         let tp2 = update_point(orth, end, mid)
                         turning_point = [tp1, tp2]
+                        console.log('Z Entered')
                     } else { // S type
                         let mid = (get_point(orth, start) + get_point(orth, end)) / 2
                         let tp1 = update_point(orth, ext_1, mid)
                         let tp2 = update_point(orth, ext_2, mid)
                         turning_point = [ext_1, tp1, tp2, ext_2]
+                        console.log('S Entered')
                     }
                 }
             }
@@ -83,9 +93,10 @@ class Line {
             if (further(dire_start, end, start) && further(dire_end, start, end)) { // L type
                 let tp = update_point(dire_start, start, get_point(dire_start, end))
                 turning_point = [tp]
+                console.log('L Entered')
             }
             if (further(dire_start, end, start) && ! further(dire_end, start, end)) { // ? type
-                
+                console.log('? Entered')
             }
             if (! further(dire_start, end, start) && further(dire_end, start, end)) { // ? type
                 
@@ -95,10 +106,10 @@ class Line {
                 turning_point = [ext_1, tp, ext_2]
             }
         }
-        let ret = `m ${start.x} ${start.y}`
+        let ret = `${start.x},${start.y}`
         for (let i of turning_point)
-            ret += ` L ${i.x} ${i.y}`
-        ret += ` L ${end.x} ${end.y}`
+            ret += ` ${i.x},${i.y}`
+        ret += ` ${end.x},${end.y}`
         return ret
     }
 }
