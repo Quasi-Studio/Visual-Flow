@@ -16,11 +16,11 @@ class SocketHint {
 
     visibility: 'visible' | 'hidden'
 
-    static readonly color: Tricolor = TricolorPreset['tangerine']
+    static readonly color: Tricolor = TricolorPreset.tangerine
     static readonly radis = 20
 
-    static readonly text_color: Color = ColorPreset['text_light']
-    static readonly text_background_color: Tricolor = TricolorPreset['tangerine']
+    static readonly text_color: Color = ColorPreset.text_light
+    static readonly text_background_color: Tricolor = TricolorPreset.tangerine
     static readonly font_size = 12
     static readonly font_family = 'Consolas'
 
