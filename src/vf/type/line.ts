@@ -16,7 +16,7 @@ class Line {
 
     el: SVGPathElement
 
-    static readonly color = TricolorPreset.cyan
+    static readonly color = TricolorPreset.red
 
     constructor (info: { [key: string]: any }) {
         if (info.start !== undefined)
@@ -55,7 +55,7 @@ class Line {
         let end = this.end.abs_pos
 
         let dire_start = this.start.face
-        let dire_end = this.start.face
+        let dire_end = this.end.face
 
         let ext_1 = Point.add(start, to_point(dire_start, 20))
         let ext_2 = Point.add(end, to_point(dire_end, 20))
@@ -67,25 +67,25 @@ class Line {
                 let tp1 = update_point(dire, ext_1, dis)
                 let tp2 = update_point(dire, ext_2, dis)
                 turning_point = [tp1, tp2]
-                console.log('U Entered')
+                // console.log('U Entered')
             } else {
                 if (get_point(rotate(dire), start) === get_point(rotate(dire), end)) { // - type
                     turning_point = []
-                    console.log('- Entered')
+                    // console.log('- Entered')
                 } else {
                     let orth = rotate(dire)
                     if (further(dire, end, start)) { // Z type
-                        let mid = (get_point(orth, start) + get_point(orth, end)) / 2
-                        let tp1 = update_point(orth, start, mid)
-                        let tp2 = update_point(orth, end, mid)
+                        let mid = (get_point(dire, start) + get_point(dire, end)) / 2
+                        let tp1 = update_point(dire, start, mid)
+                        let tp2 = update_point(dire, end, mid)
                         turning_point = [tp1, tp2]
-                        console.log('Z Entered')
+                        // console.log('Z Entered')
                     } else { // S type
                         let mid = (get_point(orth, start) + get_point(orth, end)) / 2
                         let tp1 = update_point(orth, ext_1, mid)
                         let tp2 = update_point(orth, ext_2, mid)
                         turning_point = [ext_1, tp1, tp2, ext_2]
-                        console.log('S Entered')
+                        // console.log('S Entered')
                     }
                 }
             }
@@ -93,17 +93,26 @@ class Line {
             if (further(dire_start, end, start) && further(dire_end, start, end)) { // L type
                 let tp = update_point(dire_start, start, get_point(dire_start, end))
                 turning_point = [tp]
-                console.log('L Entered')
+                // console.log('L Entered')
             }
             if (further(dire_start, end, start) && ! further(dire_end, start, end)) { // ? type
-                console.log('? Entered')
+                let mid = (get_point(dire_start, start) + get_point(dire_start, end)) / 2
+                let tp1 = update_point(dire_start, start, mid)
+                let tp2 = update_point(dire_start, ext_2, mid)
+                turning_point = [tp1, tp2, ext_2]
+                // console.log('? Entered')
             }
             if (! further(dire_start, end, start) && further(dire_end, start, end)) { // ? type
-                
+                let mid = (get_point(dire_end, start) + get_point(dire_end, end)) / 2
+                let tp1 = update_point(dire_end, ext_1, mid)
+                let tp2 = update_point(dire_end, end, mid)
+                turning_point = [ext_1, tp1, tp2]
+                // console.log('? Entered')
             }
             if (! further(dire_start, end, start) && ! further(dire_end, start, end)) { // C type
                 let tp = update_point(dire_end, ext_1, get_point(dire_end, ext_2))
                 turning_point = [ext_1, tp, ext_2]
+                // console.log('C Entered')
             }
         }
         let ret = `${start.x},${start.y}`
