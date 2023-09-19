@@ -3,7 +3,7 @@ import { ElementBase } from "../type/element-base"
 import { appendChild } from "../util/appendChild"
 import { Point } from "../type/point"
 import { Guid, root } from "../util/guid"
-import { socket_pool } from "./pool"
+import { line_pool, socket_pool } from "./pool"
 import { Socket, SocketInfo, SocketInfoEq } from "../type/socket"
 import { find } from "../util/array"
 
@@ -74,6 +74,7 @@ class Block extends ElementBase<{
         if (a === 'position') {
             this.el.setAttribute('x', this.val.fields.position.x + 'px')
             this.el.setAttribute('y', this.val.fields.position.y + 'px')
+            line_pool.search_block(this).forEach((val) => val.display())
         }
 
         if (a === 'shape.path') {

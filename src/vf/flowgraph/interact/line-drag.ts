@@ -75,10 +75,10 @@ class LineDrag {
 
     trigger(mouse: Point): void {
         let soc = socket_pool.nearest(mouse).soc
-        console.log('triggered.')
+        // console.log('triggered.')
         if (soc === undefined)
             throw new Error('Unfounded socket.')
-        console.log(soc.id.guid)
+        // console.log(soc.id.guid)
         if (soc.used)
             throw new Error('Socket is already used.')
         this.temp_line.start = soc.abs_pos
@@ -94,7 +94,7 @@ class LineDrag {
     }
 
     place(mouse: Point): void {
-        console.log('placed', this.temp_line)
+        // console.log('placed', this.temp_line)
         
         let nearest = socket_pool.nearest_within(mouse, SocketHint.radis)
         this.temp_line.start_soc.used = false
@@ -112,7 +112,6 @@ class LineDrag {
     }
 
     display(): void {
-        console.log("123243")
         this.path.setAttribute('d', `M ${this.temp_line.start.x} ${this.temp_line.start.y} L ${this.temp_line.end.x} ${this.temp_line.end.y}`)
         this.path.setAttribute('stroke-width', '5')
         this.path.setAttribute('stroke', '#000000')

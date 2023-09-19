@@ -82,6 +82,13 @@ class LinePool {
     remote_line(e: Line): void {
         this.lines = this.lines.filter((el) => el.id !== e.id)
     }
+
+    search_block(b: Block): Line[] {
+        return this.lines.filter(
+            (el) => owner(el.start.id) === b.val.id.guid
+                 || owner(el.end.id) === b.val.id.guid
+        )
+    }
 }
 
 const line_pool = new LinePool()
