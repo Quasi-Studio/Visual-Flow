@@ -38,7 +38,7 @@ class Line {
         this.el.setAttribute('fill', 'none')
         appendChild(flowgraph.el, this)
 
-        this.el.addEventListener('click', () => {
+        this.el.addEventListener('dblclick', () => {
             line_pool.remove_line(this)
             this.destructor()
         })

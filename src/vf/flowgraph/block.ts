@@ -56,6 +56,7 @@ class Block extends ElementBase<{
             text.setAttribute('font-family', i.font)
             text.setAttribute('font-size', i.size + 'px')
             text.setAttribute('fill', i.color.hex())
+            text.style.userSelect = 'none'
             appendChild(this, text)
             this.text_el.push(text)
         }
