@@ -30,13 +30,8 @@ class Drag {
         this.mouse_start = mouse
         if (socket_hint.visibility === 'visible')
             return
-        if (! blk.val.fields.selected) {
-            blk.patch({ selected: true })
-            this.dragging = false
-            return
-        } else {
-            this.dragging = true
-        }
+        blk.patch({ selected: true })
+        this.dragging = true
     }
     onmousemove(ev: MouseEvent): void {
         ev.preventDefault()
