@@ -1,20 +1,31 @@
 {
-  "name": "vf",
-  "private": true,
-  "version": "0.0.0",
+  "name": "@quasi-dev/visual-flow",
+  "version": "0.0.1",
   "type": "module",
+  "license": "MIT",
+  "description": "A visualized functional programming framework.",
+  "repository": "https://github.com/Quasi-Studio/Visual-Flow",
+  "author": "Zecyel",
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc && vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "vue": "^3.3.4"
+    "build": "tsc",
+    "publish": "npm publish --access=public"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.2.3",
-    "typescript": "^5.0.2",
-    "vite": "^4.4.5",
-    "vue-tsc": "^1.8.5"
+    "typescript": "^5.0.2"
+  },
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "files": [
+    "/dist/src",
+    "README.md",
+    "package.json"
+  ],
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/src/index.d.ts",
+        "default": "./dist/src/index.js"
+      }
+    }
   }
 }
