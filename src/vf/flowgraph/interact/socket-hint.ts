@@ -63,10 +63,11 @@ class SocketHint {
 
     mousemove(ev: MouseEvent): void {
         ev.preventDefault()
-        this.move(new Point(ev.clientX, ev.clientY))
+        this.move(flowgraph.get_relative_pos(ev))
     }
 
     move(mouse: Point): void {
+        console.log('move', mouse)
         let nearest = socket_pool.nearest_within(mouse, SocketHint.radis, false)
 
         if (nearest !== undefined) {

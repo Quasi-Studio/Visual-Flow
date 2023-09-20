@@ -26,7 +26,7 @@ class Drag {
 
     onmousedown(blk: Block, ev: MouseEvent): void {
         ev.preventDefault()
-        let mouse = new Point(ev.clientX, ev.clientY)
+        let mouse = flowgraph.get_relative_pos(ev)
         this.mouse_start = mouse
         if (socket_hint.visibility === 'visible')
             return
@@ -35,16 +35,17 @@ class Drag {
     }
     onmousemove(ev: MouseEvent): void {
         ev.preventDefault()
+        let mouse = flowgraph.get_relative_pos(ev)
         if (this.dragging) {
             for (let blk of block_pool.blocks)
                 if (blk.val.fields.selected)
                     blk.patch({
                         position: new Point(
-                            blk.val.fields.position.x + (ev.clientX - this.mouse_start.x),
-                            blk.val.fields.position.y + (ev.clientY - this.mouse_start.y)
+                            blk.val.fields.position.x + (mouse.x - this.mouse_start.x),
+                            blk.val.fields.position.y + (mouse.y - this.mouse_start.y)
                         )
                     })
-            this.mouse_start = new Point(ev.clientX, ev.clientY)
+            this.mouse_start = mouse
         }
         ev.preventDefault()
     }
@@ -53,7 +54,8 @@ class Drag {
         if (socket_hint.visibility === 'visible')
             return
         block_pool.lift_block(blk)
-        if (ev.clientX == this.mouse_start.x && ev.clientY == this.mouse_start.y && this.dragging) {
+        let mouse = flowgraph.get_relative_pos(ev)
+        if (Point.eq(this.mouse_start, mouse) && this.dragging) {
             blk.patch({ selected: false })
             this.dragging = false
             return

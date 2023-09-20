@@ -13,8 +13,7 @@ function inject(id: string): void {
         position: new Point(300, 150)
     })
 
-    
-    document.getElementById(id)!.appendChild(flowgraph.el)
+    flowgraph.inject(document.getElementById(id) as HTMLDivElement)
 
 }
 

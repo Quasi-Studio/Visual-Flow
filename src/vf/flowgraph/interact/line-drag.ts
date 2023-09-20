@@ -35,9 +35,6 @@ class LineDrag {
         socket_hint.el.addEventListener('mousedown', this.mousedown.bind(this))
         socket_hint.el.addEventListener('mousemove', this.mousemove.bind(this))
         socket_hint.el.addEventListener('mouseup', this.mouseup.bind(this))
-
-        // flowgraph.el.addEventListener('mousedown', (ev) => {console.log('flowgraph_hint', ev)})
-        // socket_hint.el.addEventListener('mousedown', (ev) => {console.log('socket_hint', ev)})
     }
 
     init_block(blk: Block): void {
@@ -50,7 +47,7 @@ class LineDrag {
         if (this.line_generating)
             // 可能有多个event_listener绑定了这个事件，只要最先的一个
             return
-        let mouse = new Point(ev.clientX, ev.clientY)
+        let mouse = flowgraph.get_relative_pos(ev)
         if (socket_hint.visibility === 'visible') {
             this.trigger(mouse)
             this.line_generating = true
@@ -61,14 +58,14 @@ class LineDrag {
     mousemove(ev: MouseEvent) {
         if (! this.line_generating)
             return
-        let mouse = new Point(ev.clientX, ev.clientY)
+        let mouse = flowgraph.get_relative_pos(ev)
         this.move(mouse)
     }
 
     mouseup(ev: MouseEvent) {
         if (! this.line_generating)
             return
-        let mouse = new Point(ev.clientX, ev.clientY)
+        let mouse = flowgraph.get_relative_pos(ev)
         this.place(mouse)
         this.line_generating = false
     }
