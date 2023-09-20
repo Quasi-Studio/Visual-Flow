@@ -1,4 +1,5 @@
 import { flowgraph } from "../flowgraph/flowgraph"
+import { line_pool } from "../flowgraph/pool"
 import { TricolorPreset } from "../preset/color"
 import { appendChild } from "../util/appendChild"
 import { Guid, root } from "../util/guid"
@@ -36,12 +37,19 @@ class Line {
         this.el.setAttribute('stroke-width', '5')
         this.el.setAttribute('fill', 'none')
         appendChild(flowgraph.el, this)
+
+        this.el.addEventListener('click', () => {
+            line_pool.remove_line(this)
+            this.destructor()
+        })
+
         this.display()
     }
 
     destructor () {
         this.start.used = false
         this.end.used = false
+        this.el.parentNode!.removeChild(this.el)
     }
 
     display() {

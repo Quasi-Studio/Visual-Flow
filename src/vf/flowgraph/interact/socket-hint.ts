@@ -67,7 +67,7 @@ class SocketHint {
     }
 
     move(mouse: Point): void {
-        console.log('move', mouse)
+        // console.log('move', mouse)
         let nearest = socket_pool.nearest_within(mouse, SocketHint.radis, false)
 
         if (nearest !== undefined) {

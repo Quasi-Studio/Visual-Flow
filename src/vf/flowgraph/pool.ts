@@ -79,7 +79,7 @@ class LinePool {
         this.lines.push(e)
     }
 
-    remote_line(e: Line): void {
+    remove_line(e: Line): void {
         this.lines = this.lines.filter((el) => el.id !== e.id)
     }
 
